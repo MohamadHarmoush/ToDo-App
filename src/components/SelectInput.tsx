@@ -38,7 +38,7 @@ const SelectInput = ({
         background: selectedColor,
       }}
       className={`rounded-xl outline-none bg-gray-800/80 hover:bg-gray-800/80 
-      mx-2 px-2 ${className}`}
+      px-2 ${className}`}
     >
       {options.map((option) => (
         <option

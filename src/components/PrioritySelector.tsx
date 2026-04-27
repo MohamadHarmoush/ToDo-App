@@ -6,9 +6,9 @@ interface PrioritySelectorProps {
 }
 const PrioritySelector = ({ value, onChange }: PrioritySelectorProps) => {
   const priorities = [
-    { value: "low", label: "Low" },
-    { value: "medium", label: "Medium", color: "#c2410c" },
-    { value: "high", label: "High", color: "#b91c1c" },
+    { value: "Low", label: "Low" },
+    { value: "Medium", label: "Medium", color: "#c2410c" },
+    { value: "High", label: "High", color: "#b91c1c" },
   ];
   const handleChange = (value: string) => {
     const priority = priorities.find((option) => option.value === value);
