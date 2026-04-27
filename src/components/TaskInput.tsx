@@ -2,6 +2,7 @@ import { useState, useCallback, type KeyboardEvent, type ChangeEvent } from "rea
 import type { Priority } from "../domain/Priority";
 import type { Task } from "../domain/Task";
 import type { TaskType } from "../domain/TaskType";
+import PrioritySelector from "./PrioritySelector";
 
 interface TaskInputProps {
   placeholder?: string;
@@ -27,10 +28,10 @@ const TaskInput = ({
     isActive: true,
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (name: string, value: string) => {
     setTask({
       ...task,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -46,25 +47,13 @@ const TaskInput = ({
         name="title"
         value={task.title}
         placeholder={placeholder}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e.target.name, e.target.value)}
       />
-      <select
-        value={"op1"}
-        className={`
-      rounded-xl outline-none
-      bg-gray-600/30 mx-2 px-2 afer:${" "}
-      `}
-      >
-        <option key={"op1"} value={"op1"}>
-          Low
-        </option>
-        <option key={"op2"} value={"op2"}>
-          Medium
-        </option>
-        <option key={"op3"} value={"op3"}>
-          High
-        </option>
-      </select>
+
+      <PrioritySelector
+        value={task.priority}
+        onChange={(value) => handleChange("priority", value)}
+      />
     </div>
   );
 };
