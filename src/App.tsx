@@ -1,8 +1,11 @@
+import AppHeader from "./components/AppHeader";
+import AppLayout from "./components/AppLayout";
+
 const App = () => {
   return (
-    <div className="max-w-lg mx-auto bg-gray-100">
-      <h2 className="text-center m-4">Hello Todo App!</h2>
-    </div>
+    <AppLayout>
+      <AppHeader title="Simple Todo" />
+    </AppLayout>
   );
 };
 
