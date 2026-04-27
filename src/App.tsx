@@ -1,10 +1,14 @@
-import AppHeader from "./components/AppHeader";
 import AppLayout from "./components/AppLayout";
+import TaskList from "./components/TaskList";
 
 const App = () => {
   return (
     <AppLayout>
-      <AppHeader title="Simple Todo" />
+      <AppLayout.AppHeader title="Simple Todo" />
+      <AppLayout.Content>
+        <TaskList />
+        <div>Test</div>
+      </AppLayout.Content>
     </AppLayout>
   );
 };
