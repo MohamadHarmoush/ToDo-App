@@ -5,13 +5,13 @@ import type { TaskType } from "../domain/TaskType";
 import PrioritySelector from "./PrioritySelector";
 import TypeSelector from "./TypeSelector";
 
-interface TaskInputProps {
+type TaskInputProps = {
   placeholder?: string;
   priority?: Priority;
   taskType?: TaskType;
   onAdd?: (task: Task) => void;
   className?: string;
-}
+};
 
 const TaskInput = ({
   priority = "Medium",

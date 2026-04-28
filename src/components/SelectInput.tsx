@@ -1,19 +1,20 @@
 import type { ChangeEvent } from "react";
 
-export interface Option {
+export type Option = {
   value: string;
   label: string;
   color?: string;
-}
+};
 
-interface SelectProps {
+type SelectProps = {
   name: string;
   options: Option[];
   value: string;
   defaultColor?: string;
   className?: string;
   onChange: (itemId: string) => void;
-}
+};
+
 const SelectInput = ({
   name,
   value,

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 
-interface AppHeaderProps {
+type AppHeaderProps = {
   title?: string;
-}
+};
 
 const AppHeader = ({ title }: AppHeaderProps) => (
   <header className="border-b border-gray-700 bg-gray-800/50 px-8 py-4">

@@ -1,9 +1,10 @@
 import SelectInput from "./SelectInput";
 
-interface PrioritySelectorProps {
+type PrioritySelectorProps = {
   value: string;
   onChange: (value: string) => void;
-}
+};
+
 const PrioritySelector = ({ value, onChange }: PrioritySelectorProps) => {
   const priorities = [
     { value: "Low", label: "Low" },

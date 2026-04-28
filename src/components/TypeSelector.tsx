@@ -1,9 +1,10 @@
 import SelectInput from "./SelectInput";
 
-interface TypeSelectorProps {
+type TypeSelectorProps = {
   value: string;
   onChange: (value: string) => void;
-}
+};
+
 const TypeSelector = ({ value, onChange }: TypeSelectorProps) => {
   const types = [
     { value: "Personal", label: "Personal", color: "#0EA5E9" }, // cyan-blue

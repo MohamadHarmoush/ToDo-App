@@ -1,6 +1,6 @@
 import type { Task } from "../domain/Task";
 
-interface TaskListProps {
+type TaskListProps =  {
   tasks: Task[];
 }
 const TaskList = ({ tasks }: TaskListProps) => {

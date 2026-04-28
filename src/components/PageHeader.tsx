@@ -1,7 +1,7 @@
-interface PageHeaderProps {
+type PageHeaderProps = {
   title: string;
   subtitle?: string;
-}
+};
 
 const PageHeader = ({ title, subtitle }: PageHeaderProps) => {
   return (
