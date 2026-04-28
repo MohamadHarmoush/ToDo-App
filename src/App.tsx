@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AppLayout from "./components/AppLayout";
 import TaskList from "./components/TaskList";
 import PageHeader from "./components/PageHeader";
@@ -6,22 +6,26 @@ import TaskInput, { type NewTask } from "./components/TaskInput";
 import type { Task } from "./domain/Task";
 
 const TASKS_KEY = "tasks";
+const getStoredTasks = (): Task[] => {
+  const storedTasks = localStorage.getItem(TASKS_KEY);
+  if (!storedTasks) return [];
+  return JSON.parse(storedTasks) || [];
+};
 
 const App = () => {
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const storedTasks = localStorage.getItem(TASKS_KEY);
-    if (!storedTasks) return [];
-    return JSON.parse(storedTasks) || [];
-  });
+  const [tasks, setTasks] = useState<Task[]>(getStoredTasks);
+  const nextTaskIdRef = useRef(
+    tasks.reduce((maxTaskId, task) => Math.max(maxTaskId, task.id), 0) + 1,
+  );
 
   const handleAddTask = (newTask: NewTask) => {
-    setTasks((prev) => {
+    setTasks((prevTasks) => {
       const addedTask = {
         ...newTask,
-        id: prev.length + 1,
+        id: nextTaskIdRef.current++,
       };
 
-      return [...prev, addedTask];
+      return [...prevTasks, addedTask];
     });
   };
 
@@ -29,6 +33,10 @@ const App = () => {
     setTasks((prevTasks) =>
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
     );
+  };
+
+  const handleRemoveTask = (taskId: number) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
   };
 
   useEffect(() => {
@@ -41,7 +49,7 @@ const App = () => {
       <AppLayout.Content>
         <PageHeader title="Focus on what matters" subtitle="Ready to organize your day?" />
         <TaskInput onAdd={handleAddTask} />
-        <TaskList tasks={tasks} onTaskChange={handleTaskChange} />
+        <TaskList tasks={tasks} onTaskChange={handleTaskChange} onRemoveTask={handleRemoveTask} />
       </AppLayout.Content>
     </AppLayout>
   );
