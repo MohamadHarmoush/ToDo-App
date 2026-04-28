@@ -10,7 +10,10 @@ type TaskListProps = {
 
 const TaskList = ({ tasks, onTaskChange, onRemoveTask }: TaskListProps) => {
   const completedTasks = tasks.filter((task) => task.isComplete);
+  const pendingTasks = tasks.filter((task) => !task.isComplete);
+  const sortedTasks = [...pendingTasks, ...completedTasks];
   const taskText = completedTasks.length === 1 ? 'task' : 'tasks';
+  
   return (
     <div className='mt-8 flex flex-col gap-2 overflow-y-auto pr-2'>
       <h1>
@@ -19,7 +22,7 @@ const TaskList = ({ tasks, onTaskChange, onRemoveTask }: TaskListProps) => {
           ? ` ${completedTasks.length} ${taskText} are done.`
           : ' No tasks are done yet.'}
       </h1>
-      {tasks.map((task) => (
+      {sortedTasks.map((task) => (
         <TaskItem task={task} key={task.id} onUpdate={onTaskChange} onRemove={onRemoveTask} />
       ))}
     </div>
