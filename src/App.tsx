@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppLayout from "./components/AppLayout";
 import TaskList from "./components/TaskList";
 import PageHeader from "./components/PageHeader";
 import TaskInput, { type NewTask } from "./components/TaskInput";
 import type { Task } from "./domain/Task";
 
+const TASKS_KEY = "tasks";
+
 const App = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => {
+    const storedTasks = localStorage.getItem(TASKS_KEY);
+    if (!storedTasks) return [];
+    return JSON.parse(storedTasks) || [];
+  });
 
   const handleAddTask = (newTask: NewTask) => {
     setTasks((prev) => {
@@ -24,6 +30,10 @@ const App = () => {
       prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
     );
   };
+
+  useEffect(() => {
+    localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+  }, [tasks]);
 
   return (
     <AppLayout>

@@ -13,11 +13,13 @@ const AppHeader = ({ title }: AppHeaderProps) => (
 );
 
 const Content = ({ children }: { children: ReactNode }) => (
-  <main className="m-8 py-6 bg-gray-900">{children}</main>
+  <main className="m-8 py-6 bg-gray-900 flex-1 min-h-0 flex flex-col">
+    {children}
+  </main>
 );
 
 const AppLayout = ({ children }: { children: ReactNode }) => (
-  <div className="x-auto mt-2">{children}</div>
+  <div className="x-auto mt-2 min-h-screen flex flex-col overflow-hidden">{children}</div>
 );
 
 AppLayout.AppHeader = AppHeader;
