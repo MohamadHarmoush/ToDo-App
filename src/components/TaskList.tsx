@@ -1,6 +1,6 @@
 import type { Task } from '@/domain/Task';
 
-import { TaskItem } from './TaskItem';
+import { TaskItem } from './task/TaskItem';
 
 type TaskListProps = {
   tasks: Task[];
