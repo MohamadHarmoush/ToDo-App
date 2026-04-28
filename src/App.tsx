@@ -7,10 +7,33 @@ import TaskList from './components/TaskList';
 import type { Task } from './domain/Task';
 
 const TASKS_KEY = 'tasks';
+
+const hasProperty = <T extends string>(obj: object, key: T): obj is { [K in T]: unknown } => {
+  return key in obj;
+};
+
+const isValidTask = (obj: unknown): obj is Task => {
+  if (typeof obj !== 'object' || obj === null) return false;
+
+  if (!hasProperty(obj, 'id') || typeof obj.id !== 'number') return false;
+  if (!hasProperty(obj, 'title') || typeof obj.title !== 'string') return false;
+  if (!hasProperty(obj, 'priority') || typeof obj.priority !== 'string') return false;
+  if (!hasProperty(obj, 'type') || typeof obj.type !== 'string') return false;
+  if (!hasProperty(obj, 'notes') || typeof obj.notes !== 'string') return false;
+  if (!hasProperty(obj, 'isComplete') || typeof obj.isComplete !== 'boolean') return false;
+  return true;
+};
+
 const getStoredTasks = (): Task[] => {
   const storedTasks = localStorage.getItem(TASKS_KEY);
   if (!storedTasks) return [];
-  return JSON.parse(storedTasks) ?? [];
+  try {
+    const parsed: unknown = JSON.parse(storedTasks);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item: unknown) => isValidTask(item));
+  } catch {
+    return [];
+  }
 };
 
 const App = () => {
@@ -23,8 +46,9 @@ const App = () => {
     setTasks((prevTasks) => {
       const addedTask = {
         ...newTask,
-        id: nextTaskIdRef.current++,
+        id: nextTaskIdRef.current,
       };
+      nextTaskIdRef.current += 1;
 
       return [...prevTasks, addedTask];
     });

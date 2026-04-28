@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Priority } from "../domain/Priority";
-import type { Task } from "../domain/Task";
-import type { TaskType } from "../domain/TaskType";
+import type { Priority } from "@/domain/Priority";
+import type { Task } from "@/domain/Task";
+import type { TaskType } from "@/domain/TaskType";
 import PrioritySelector from "./PrioritySelector";
 import TypeSelector from "./TypeSelector";
 
@@ -22,12 +22,13 @@ const TaskInput = ({
   placeholder = "What needs to be done?",
   className = "",
 }: TaskInputProps) => {
-  const [task, setTask] = useState<NewTask>({
+  const [task, setTask] = useState<NewTask>(() => ({
     title: "",
     priority: priority,
     type: taskType,
+    notes: "",
     isComplete: false,
-  });
+  }));
 
   const handleChange = (name: string, value: string) => {
     setTask((prevTask) => {

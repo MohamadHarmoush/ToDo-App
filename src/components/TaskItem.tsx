@@ -1,6 +1,6 @@
-import { getPriorityColor } from "../domain/Priority";
-import type { Task } from "../domain/Task";
-import { getTaskTypeColor } from "../domain/TaskType";
+import { getPriorityColor } from "@/domain/Priority";
+import type { Task } from "@/domain/Task";
+import { getTaskTypeColor } from "@/domain/TaskType";
 import { Badge } from "./Badge";
 import { RemoveIcon } from "./RemoveIcon";
 
@@ -33,6 +33,7 @@ export const TaskItem = ({ task, className, onUpdate, onRemove }: Props) => {
         />
         <h1 className={`${taskTitleClassName} w-full`}>{task.title}</h1>
         <button
+          type="button"
           onClick={() =>{  onRemove(task.id); }}
           className="p-1 text-white bg-red-800 rounded-lg hover:bg-red-300/80 transition-colors"
         >

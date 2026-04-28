@@ -1,5 +1,5 @@
 import SelectInput from "./SelectInput";
-import { priorityColors, type Priority } from "../domain/Priority";
+import { priorityColors, type Priority } from "@/domain/Priority";
 import type { Option } from "./SelectInput";
 
 type PrioritySelectorProps = {
@@ -13,12 +13,14 @@ const priorities: Option[] = [
   { value: "High", label: "High", color: priorityColors.High },
 ];
 
+const isPriority = (value: string): value is Priority => {
+  return value === "Low" || value === "Medium" || value === "High";
+};
+
 const PrioritySelector = ({ value, onChange }: PrioritySelectorProps) => {
   const handleChange = (newValue: string) => {
-    const priority = priorities.find((option) => option.value === newValue);
-    if (!priority) return;
-
-    onChange(priority.value as Priority);
+    if (!isPriority(newValue)) return;
+    onChange(newValue);
   };
 
   return (

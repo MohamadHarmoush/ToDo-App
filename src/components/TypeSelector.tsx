@@ -1,5 +1,5 @@
 import SelectInput from "./SelectInput";
-import { taskTypeColors, type TaskType } from "../domain/TaskType";
+import { taskTypeColors, type TaskType } from "@/domain/TaskType";
 import type { Option } from "./SelectInput";
 
 type TypeSelectorProps = {
@@ -16,12 +16,14 @@ const types: Option[] = [
   { value: "General", label: "General", color: taskTypeColors.General },
 ];
 
+const isTaskType = (value: string): value is TaskType => {
+  return ["Personal", "Work", "Shopping", "Health", "Finance", "General"].includes(value);
+};
+
 const TypeSelector = ({ value, onChange }: TypeSelectorProps) => {
   const handleChange = (newValue: string) => {
-    const type = types.find((option) => option.value === newValue);
-    if (!type) return;
-
-    onChange(type.value as TaskType);
+    if (!isTaskType(newValue)) return;
+    onChange(newValue);
   };
 
   return (
