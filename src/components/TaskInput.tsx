@@ -64,16 +64,16 @@ const TaskInput = ({
         name="title"
         value={task.title}
         placeholder={placeholder}
-        onChange={(e) => handleChange(e.target.name, e.target.value)}
+        onChange={(e) =>{  handleChange(e.target.name, e.target.value); }}
       />
 
       <div className="flex gap-2">
         <PrioritySelector
           value={task.priority}
-          onChange={(value) => handleChange("priority", value)}
+          onChange={(value) =>{  handleChange("priority", value); }}
         />
 
-        <TypeSelector value={task.type} onChange={(value) => handleChange("type", value)} />
+        <TypeSelector value={task.type} onChange={(value) =>{  handleChange("type", value); }} />
 
         <button
           disabled={!task.title}

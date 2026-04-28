@@ -28,12 +28,12 @@ export const TaskItem = ({ task, className, onUpdate, onRemove }: Props) => {
           type="checkbox"
           id={`task-complete-${task.id}`}
           checked={task.isComplete}
-          onChange={(e) => handleOnCheckClick(e.target.checked)}
+          onChange={(e) =>{  handleOnCheckClick(e.target.checked); }}
           className="w-4 h-4 mt-1"
         />
         <h1 className={`${taskTitleClassName} w-full`}>{task.title}</h1>
         <button
-          onClick={() => onRemove(task.id)}
+          onClick={() =>{  onRemove(task.id); }}
           className="p-1 text-white bg-red-800 rounded-lg hover:bg-red-300/80 transition-colors"
         >
           <RemoveIcon className="w-5 h-5" />
@@ -43,13 +43,15 @@ export const TaskItem = ({ task, className, onUpdate, onRemove }: Props) => {
         <Badge label={task.priority} textColor={priorityColor} />
         <Badge label={task.type} textColor={typeColor} />
       </div>
-      <textarea
-        className="w-full bg-gray-800 rounded-lg outline-none p-2 text-xs"
-        placeholder="Add notes..."
-        rows={4}
-        value={task.notes}
-        onChange={(e) => onUpdate({ ...task, notes: e.target.value })}
-      />
+      <div>
+        <textarea
+          className="w-full bg-gray-800 rounded-lg outline-none p-2 text-xs"
+          placeholder="Add notes..."
+          rows={4}
+          value={task.notes}
+          onChange={(e) =>{  onUpdate({ ...task, notes: e.target.value }); }}
+        />
+      </div>
     </div>
   );
 };

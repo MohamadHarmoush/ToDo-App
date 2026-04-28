@@ -1,15 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import AppLayout from "./components/AppLayout";
-import TaskList from "./components/TaskList";
-import PageHeader from "./components/PageHeader";
-import TaskInput, { type NewTask } from "./components/TaskInput";
-import type { Task } from "./domain/Task";
+import { useEffect, useRef, useState } from 'react';
 
-const TASKS_KEY = "tasks";
+import AppLayout from './components/AppLayout';
+import PageHeader from './components/PageHeader';
+import TaskInput, { type NewTask } from './components/TaskInput';
+import TaskList from './components/TaskList';
+import type { Task } from './domain/Task';
+
+const TASKS_KEY = 'tasks';
 const getStoredTasks = (): Task[] => {
   const storedTasks = localStorage.getItem(TASKS_KEY);
   if (!storedTasks) return [];
-  return JSON.parse(storedTasks) || [];
+  return JSON.parse(storedTasks) ?? [];
 };
 
 const App = () => {
@@ -45,9 +46,9 @@ const App = () => {
 
   return (
     <AppLayout>
-      <AppLayout.AppHeader title="Simple Todo" />
+      <AppLayout.AppHeader title='Simple Todo' />
       <AppLayout.Content>
-        <PageHeader title="Focus on what matters" subtitle="Ready to organize your day?" />
+        <PageHeader title='Focus on what matters' subtitle='Ready to organize your day?' />
         <TaskInput onAdd={handleAddTask} />
         <TaskList tasks={tasks} onTaskChange={handleTaskChange} onRemoveTask={handleRemoveTask} />
       </AppLayout.Content>
