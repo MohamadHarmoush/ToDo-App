@@ -5,11 +5,13 @@ import type { TaskType } from "../domain/TaskType";
 import PrioritySelector from "./PrioritySelector";
 import TypeSelector from "./TypeSelector";
 
+export type NewTask = Omit<Task, "id">;
+
 type TaskInputProps = {
   placeholder?: string;
   priority?: Priority;
   taskType?: TaskType;
-  onAdd?: (task: Task) => void;
+  onAdd?: (task: NewTask) => void;
   className?: string;
 };
 
@@ -20,11 +22,11 @@ const TaskInput = ({
   placeholder = "What needs to be done?",
   className = "",
 }: TaskInputProps) => {
-  const [task, setTask] = useState<Task>({
+  const [task, setTask] = useState<NewTask>({
     title: "",
     priority: priority,
     type: taskType,
-    isActive: true,
+    isComplete: false,
   });
 
   const handleChange = (name: string, value: string) => {
@@ -41,6 +43,7 @@ const TaskInput = ({
     if (!trimmedTitle) return;
 
     const newTask = { ...task, title: trimmedTitle };
+
     onAdd?.(newTask);
 
     setTask((prevTask) => ({ ...prevTask, title: "" }));

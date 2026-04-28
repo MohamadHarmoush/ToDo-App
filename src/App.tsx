@@ -2,14 +2,27 @@ import { useState } from "react";
 import AppLayout from "./components/AppLayout";
 import TaskList from "./components/TaskList";
 import PageHeader from "./components/PageHeader";
-import TaskInput from "./components/TaskInput";
+import TaskInput, { type NewTask } from "./components/TaskInput";
 import type { Task } from "./domain/Task";
 
 const App = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const handleAddTask = (task: Task) => {
-    setTasks((prev) => [...prev, task]);
+  const handleAddTask = (newTask: NewTask) => {
+    setTasks((prev) => {
+      const addedTask = {
+        ...newTask,
+        id: prev.length + 1,
+      };
+
+      return [...prev, addedTask];
+    });
+  };
+
+  const handleTaskChange = (updatedTask: Task) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
+    );
   };
 
   return (
@@ -18,7 +31,7 @@ const App = () => {
       <AppLayout.Content>
         <PageHeader title="Focus on what matters" subtitle="Ready to organize your day?" />
         <TaskInput onAdd={handleAddTask} />
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} onTaskChange={handleTaskChange} />
       </AppLayout.Content>
     </AppLayout>
   );

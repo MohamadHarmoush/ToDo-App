@@ -1,22 +1,26 @@
 import SelectInput from "./SelectInput";
+import { priorityColors, type Priority } from "../domain/Priority";
+import type { Option } from "./SelectInput";
 
 type PrioritySelectorProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value: Priority;
+  onChange: (value: Priority) => void;
 };
 
+const priorities: Option[] = [
+  { value: "Low", label: "Low", color: priorityColors.Low },
+  { value: "Medium", label: "Medium", color: priorityColors.Medium },
+  { value: "High", label: "High", color: priorityColors.High },
+];
+
 const PrioritySelector = ({ value, onChange }: PrioritySelectorProps) => {
-  const priorities = [
-    { value: "Low", label: "Low" },
-    { value: "Medium", label: "Medium", color: "#c2410c" },
-    { value: "High", label: "High", color: "#b91c1c" },
-  ];
-  const handleChange = (value: string) => {
-    const priority = priorities.find((option) => option.value === value);
+  const handleChange = (newValue: string) => {
+    const priority = priorities.find((option) => option.value === newValue);
     if (!priority) return;
 
-    onChange(priority.value);
+    onChange(priority.value as Priority);
   };
+
   return (
     <SelectInput
       name="priority"
