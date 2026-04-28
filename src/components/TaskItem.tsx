@@ -43,6 +43,13 @@ export const TaskItem = ({ task, className, onUpdate, onRemove }: Props) => {
         <Badge label={task.priority} textColor={priorityColor} />
         <Badge label={task.type} textColor={typeColor} />
       </div>
+      <textarea
+        className="w-full bg-gray-800 rounded-lg outline-none p-2 text-xs"
+        placeholder="Add notes..."
+        rows={4}
+        value={task.notes}
+        onChange={(e) => onUpdate({ ...task, notes: e.target.value })}
+      />
     </div>
   );
 };

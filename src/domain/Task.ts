@@ -6,5 +6,6 @@ export type Task = {
   title: string;
   priority: Priority;
   type: TaskType;
+  notes: string;
   isComplete: boolean;
 };
