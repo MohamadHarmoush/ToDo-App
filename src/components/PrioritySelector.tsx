@@ -7,28 +7,19 @@ type PrioritySelectorProps = {
   onChange: (value: Priority) => void;
 };
 
-const priorities: Option[] = [
+const priorities: Option<Priority>[] = [
   { value: "Low", label: "Low", color: priorityColors.Low },
   { value: "Medium", label: "Medium", color: priorityColors.Medium },
   { value: "High", label: "High", color: priorityColors.High },
 ];
 
-const isPriority = (value: string): value is Priority => {
-  return value === "Low" || value === "Medium" || value === "High";
-};
-
 const PrioritySelector = ({ value, onChange }: PrioritySelectorProps) => {
-  const handleChange = (newValue: string) => {
-    if (!isPriority(newValue)) return;
-    onChange(newValue);
-  };
-
   return (
     <SelectInput
       name="priority"
       value={value}
       options={priorities}
-      onChange={handleChange}
+      onChange={onChange}
       defaultColor="#4b5563"
     />
   );

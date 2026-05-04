@@ -7,7 +7,7 @@ type TypeSelectorProps = {
   onChange: (value: TaskType) => void;
 };
 
-const types: Option[] = [
+const types: Option<TaskType>[] = [
   { value: "Personal", label: "Personal", color: taskTypeColors.Personal },
   { value: "Work", label: "Work", color: taskTypeColors.Work },
   { value: "Shopping", label: "Shopping", color: taskTypeColors.Shopping },
@@ -16,22 +16,13 @@ const types: Option[] = [
   { value: "General", label: "General", color: taskTypeColors.General },
 ];
 
-const isTaskType = (value: string): value is TaskType => {
-  return ["Personal", "Work", "Shopping", "Health", "Finance", "General"].includes(value);
-};
-
 const TypeSelector = ({ value, onChange }: TypeSelectorProps) => {
-  const handleChange = (newValue: string) => {
-    if (!isTaskType(newValue)) return;
-    onChange(newValue);
-  };
-
   return (
     <SelectInput
       name="type"
       value={value}
       options={types}
-      onChange={handleChange}
+      onChange={onChange}
       defaultColor="#4b5563"
     />
   );
