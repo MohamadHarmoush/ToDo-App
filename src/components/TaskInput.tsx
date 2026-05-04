@@ -3,6 +3,8 @@ import { useState } from 'react';
 import type { Priority } from '@/domain/Priority';
 import type { Task } from '@/domain/Task';
 import type { TaskType } from '@/domain/TaskType';
+import { TodoActions } from '@/domain/TodoAction';
+import { useTodosDispatch } from './TodosProvider';
 
 import PrioritySelector from './PrioritySelector';
 import TypeSelector from './TypeSelector';
@@ -11,17 +13,17 @@ type TaskInputProps = {
   placeholder?: string;
   priority?: Priority;
   taskType?: TaskType;
-  onAdd?: (task: Task) => void;
   className?: string;
 };
 
 const TaskInput = ({
   priority = 'Medium',
   taskType = 'General',
-  onAdd,
   placeholder = 'What needs to be done?',
   className = '',
 }: TaskInputProps) => {
+  const dispatch = useTodosDispatch();
+
   const [task, setTask] = useState<Task>(() => ({
     id: -1,
     title: '',
@@ -32,24 +34,16 @@ const TaskInput = ({
   }));
 
   const handleChange = (name: string, value: string) => {
-    setTask((prevTask) => {
-      return {
-        ...prevTask,
-        [name]: value,
-      };
-    });
+    setTask((prevTask) => ({ ...prevTask, [name]: value }));
   };
 
   const handleSubmit = () => {
     const trimmedTitle = task.title.trim();
     if (!trimmedTitle) return;
-
-    const newTask = { ...task, title: trimmedTitle, id: Date.now() };
-
-    onAdd?.(newTask);
-
+    dispatch(TodoActions.add({ ...task, title: trimmedTitle, id: Date.now() }));
     setTask((prevTask) => ({ ...prevTask, title: '' }));
   };
+
   return (
     <form
       onSubmit={(e) => {

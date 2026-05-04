@@ -21,6 +21,7 @@ export const TaskItem = ({ task, className = '', onUpdate, onRemove }: Props) =>
   const handleOnCheckClick = (value: boolean) => {
     onUpdate({ ...task, isComplete: value });
   };
+
   const toggleExpand = () => {
     setIsExpand((prev) => !prev);
   };
