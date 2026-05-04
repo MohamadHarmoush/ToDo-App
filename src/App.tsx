@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 
 import AppLayout from './components/AppLayout';
 import PageHeader from './components/PageHeader';
-import TaskInput, { type NewTask } from './components/TaskInput';
+import TaskInput from './components/TaskInput';
 import TaskList from './components/TaskList';
 import type { Task } from './domain/Task';
+import type { TodoAction } from './domain/TodoAction';
 
 const TASKS_KEY = 'tasks';
 
@@ -36,33 +37,21 @@ const getStoredTasks = (): Task[] => {
   }
 };
 
+const taskReducer = (prevState: Task[], action: TodoAction): Task[] => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [...prevState, action.payload];
+    case 'UPDATE_TODO':
+      return prevState.map((task) => (task.id === action.payload.id ? action.payload : task));
+    case 'REMOVE_TODO':
+      return prevState.filter((task) => task.id !== action.payload.id);
+    default:
+      return prevState;
+  }
+};
+
 const App = () => {
-  const [tasks, setTasks] = useState<Task[]>(getStoredTasks);
-  const nextTaskIdRef = useRef(
-    tasks.reduce((maxTaskId, task) => Math.max(maxTaskId, task.id), 0) + 1,
-  );
-
-  const handleAddTask = (newTask: NewTask) => {
-    setTasks((prevTasks) => {
-      const addedTask = {
-        ...newTask,
-        id: nextTaskIdRef.current,
-      };
-      nextTaskIdRef.current += 1;
-
-      return [...prevTasks, addedTask];
-    });
-  };
-
-  const handleTaskChange = (updatedTask: Task) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)),
-    );
-  };
-
-  const handleRemoveTask = (taskId: number) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
-  };
+  const [tasks, dispatch] = useReducer(taskReducer, [], getStoredTasks);
 
   useEffect(() => {
     localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
@@ -73,8 +62,20 @@ const App = () => {
       <AppLayout.AppHeader title='Simple Todo' />
       <AppLayout.Content>
         <PageHeader title='Focus on what matters' subtitle='Ready to organize your day?' />
-        <TaskInput onAdd={handleAddTask} />
-        <TaskList tasks={tasks} onTaskChange={handleTaskChange} onRemoveTask={handleRemoveTask} />
+        <TaskInput
+          onAdd={(addedTask) => {
+            dispatch({ type: 'ADD_TODO', payload: addedTask });
+          }}
+        />
+        <TaskList
+          tasks={tasks}
+          onTaskChange={(updatedTask) => {
+            dispatch({ type: 'UPDATE_TODO', payload: updatedTask });
+          }}
+          onRemoveTask={(taskId) => {
+            dispatch({ type: 'REMOVE_TODO', payload: { id: taskId } });
+          }}
+        />
       </AppLayout.Content>
     </AppLayout>
   );

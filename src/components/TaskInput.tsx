@@ -1,32 +1,33 @@
-import { useState } from "react";
-import type { Priority } from "@/domain/Priority";
-import type { Task } from "@/domain/Task";
-import type { TaskType } from "@/domain/TaskType";
-import PrioritySelector from "./PrioritySelector";
-import TypeSelector from "./TypeSelector";
+import { useState } from 'react';
 
-export type NewTask = Omit<Task, "id">;
+import type { Priority } from '@/domain/Priority';
+import type { Task } from '@/domain/Task';
+import type { TaskType } from '@/domain/TaskType';
+
+import PrioritySelector from './PrioritySelector';
+import TypeSelector from './TypeSelector';
 
 type TaskInputProps = {
   placeholder?: string;
   priority?: Priority;
   taskType?: TaskType;
-  onAdd?: (task: NewTask) => void;
+  onAdd?: (task: Task) => void;
   className?: string;
 };
 
 const TaskInput = ({
-  priority = "Medium",
-  taskType = "General",
+  priority = 'Medium',
+  taskType = 'General',
   onAdd,
-  placeholder = "What needs to be done?",
-  className = "",
+  placeholder = 'What needs to be done?',
+  className = '',
 }: TaskInputProps) => {
-  const [task, setTask] = useState<NewTask>(() => ({
-    title: "",
+  const [task, setTask] = useState<Task>(() => ({
+    id: -1,
+    title: '',
     priority: priority,
     type: taskType,
-    notes: "",
+    notes: '',
     isComplete: false,
   }));
 
@@ -43,11 +44,11 @@ const TaskInput = ({
     const trimmedTitle = task.title.trim();
     if (!trimmedTitle) return;
 
-    const newTask = { ...task, title: trimmedTitle };
+    const newTask = { ...task, title: trimmedTitle, id: Date.now() };
 
     onAdd?.(newTask);
 
-    setTask((prevTask) => ({ ...prevTask, title: "" }));
+    setTask((prevTask) => ({ ...prevTask, title: '' }));
   };
   return (
     <form
@@ -55,33 +56,38 @@ const TaskInput = ({
         e.preventDefault();
         handleSubmit();
       }}
-      className={`border border-gray-800 hover:border-gray-600
-      hover:bg-gray-800 rounded-xl p-2 transition-colors ${className}
-      flex flex-wrap gap-2`}
+      className={`rounded-xl border border-gray-800 p-2 transition-colors hover:border-gray-600 hover:bg-gray-800 ${className} flex flex-wrap gap-2`}
     >
       <input
-        className="p-2 flex-1 text-white placeholder-gray-500"
-        type="text"
-        name="title"
+        className='flex-1 p-2 text-white placeholder-gray-500'
+        type='text'
+        name='title'
         value={task.title}
         placeholder={placeholder}
-        onChange={(e) =>{  handleChange(e.target.name, e.target.value); }}
+        onChange={(e) => {
+          handleChange(e.target.name, e.target.value);
+        }}
       />
 
-      <div className="flex gap-2">
+      <div className='flex gap-2'>
         <PrioritySelector
           value={task.priority}
-          onChange={(value) =>{  handleChange("priority", value); }}
+          onChange={(value) => {
+            handleChange('priority', value);
+          }}
         />
 
-        <TypeSelector value={task.type} onChange={(value) =>{  handleChange("type", value); }} />
+        <TypeSelector
+          value={task.type}
+          onChange={(value) => {
+            handleChange('type', value);
+          }}
+        />
 
         <button
           disabled={!task.title}
-          type="submit"
-          className="inline-flex items-center gap-2 px-8 rounded-xl 
-        enabled:bg-indigo-900 disabled:bg-indigo-900/50
-        disabled:cursor-not-allowed"
+          type='submit'
+          className='inline-flex items-center gap-2 rounded-xl px-8 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
         >
           <span>+</span>
           <span>Add</span>
