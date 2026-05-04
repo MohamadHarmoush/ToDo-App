@@ -1,6 +1,6 @@
 import { getPriorityColor } from '@/domain/Priority';
 import type { Priority } from '@/domain/Priority';
-import { getTaskTypeColor } from '@/domain/TaskType';
+import { taskTypeColors } from '@/domain/TaskType';
 import type { TaskType } from '@/domain/TaskType';
 
 import { Badge } from './Badge';
@@ -13,7 +13,7 @@ type Props = {
 
 export const TaskBadges = ({ priority, type, className = '' }: Props) => {
   const priorityColor = getPriorityColor(priority);
-  const typeColor = getTaskTypeColor(type);
+  const typeColor = taskTypeColors[type];
 
   return (
     <div className={`inline-flex w-fit gap-2 ${className}`}>
