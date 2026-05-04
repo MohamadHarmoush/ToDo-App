@@ -15,7 +15,7 @@ type Props = {
   onRemove: (taskId: number) => void;
 };
 
-export const TaskItem = ({ task, className, onUpdate, onRemove }: Props) => {
+export const TaskItem = ({ task, className = '', onUpdate, onRemove }: Props) => {
   const [isExpanded, setIsExpand] = useState(false);
 
   const handleOnCheckClick = (value: boolean) => {

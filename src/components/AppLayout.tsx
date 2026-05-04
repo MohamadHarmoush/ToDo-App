@@ -1,25 +1,23 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 type AppHeaderProps = {
   title?: string;
 };
 
 const AppHeader = ({ title }: AppHeaderProps) => (
-  <header className="border-b border-gray-700 bg-gray-800/50 px-8 py-4">
-    <div className="pb-2">
-      <h1 className="text-xl font-bold text-white/80">{title}</h1>
+  <header className='border-b border-gray-700 bg-gray-800/50 px-8 py-4'>
+    <div className='pb-2'>
+      <h1 className='text-xl font-bold text-white/80'>{title}</h1>
     </div>
   </header>
 );
 
 const Content = ({ children }: { children: ReactNode }) => (
-  <main className="m-8 py-6 bg-gray-900 flex-1 min-h-0 flex flex-col">
-    {children}
-  </main>
+  <main className='m-8 flex min-h-0 flex-1 flex-col bg-gray-900 py-6'>{children}</main>
 );
 
 const AppLayout = ({ children }: { children: ReactNode }) => (
-  <div className="x-auto mt-2 min-h-screen flex flex-col overflow-hidden">{children}</div>
+  <div className='mx-auto mt-2 flex min-h-screen flex-col overflow-hidden'>{children}</div>
 );
 
 AppLayout.AppHeader = AppHeader;

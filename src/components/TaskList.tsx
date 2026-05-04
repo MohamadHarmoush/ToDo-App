@@ -12,14 +12,13 @@ const TaskList = ({ tasks, onTaskChange, onRemoveTask }: TaskListProps) => {
   const completedTasks = tasks.filter((task) => task.isComplete);
   const pendingTasks = tasks.filter((task) => !task.isComplete);
   const sortedTasks = [...pendingTasks, ...completedTasks];
-  const taskText = completedTasks.length === 1 ? 'task' : 'tasks';
-  
+
   return (
     <div className='mt-8 flex flex-col gap-2 overflow-y-auto pr-2'>
       <h1>
-        {`We've added ${tasks.length} ${taskText}.`}
+        {`We've added ${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}.`}
         {completedTasks.length > 0
-          ? ` ${completedTasks.length} ${taskText} are done.`
+          ? ` ${completedTasks.length} ${completedTasks.length === 1 ? 'task' : 'tasks'} are done.`
           : ' No tasks are done yet.'}
       </h1>
       {sortedTasks.map((task) => (

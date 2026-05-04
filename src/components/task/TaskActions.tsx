@@ -8,7 +8,7 @@ type Props = {
   className?: string;
 };
 
-export const TaskActions = ({ expanded, onToggle, onRemove, className = 'className' }: Props) => {
+export const TaskActions = ({ expanded, onToggle, onRemove, className = '' }: Props) => {
   return (
     <div className={`flex items-start gap-2 ${className}`}>
       <button type='button' onClick={onToggle} className='flex items-center gap-2 sm:pl-10'>

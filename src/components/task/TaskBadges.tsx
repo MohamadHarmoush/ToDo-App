@@ -11,7 +11,7 @@ type Props = {
   className?: string;
 };
 
-export const TaskBadges = ({ priority, type, className }: Props) => {
+export const TaskBadges = ({ priority, type, className = '' }: Props) => {
   const priorityColor = getPriorityColor(priority);
   const typeColor = getTaskTypeColor(type);
 
