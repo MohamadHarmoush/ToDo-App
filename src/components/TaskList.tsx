@@ -7,6 +7,7 @@ import { useTodos } from './TodosProvider';
 
 const TaskList = () => {
   const { tasks, dispatch } = useTodos();
+  console.log('TaskList rendered.');
 
   const sortedTasks = useMemo(() => {
     const completedTasks = tasks.filter((task) => task.isComplete);

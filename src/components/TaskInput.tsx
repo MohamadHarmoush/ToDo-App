@@ -4,9 +4,9 @@ import type { Priority } from '@/domain/Priority';
 import type { Task } from '@/domain/Task';
 import type { TaskType } from '@/domain/TaskType';
 import { TodoActions } from '@/domain/TodoAction';
-import { useTodos } from './TodosProvider';
 
 import PrioritySelector from './PrioritySelector';
+import { useTodos } from './TodosProvider';
 import TypeSelector from './TypeSelector';
 
 type TaskInputProps = {
@@ -24,6 +24,7 @@ const TaskInput = ({
 }: TaskInputProps) => {
   const { dispatch } = useTodos();
 
+  console.log('TaskInput rendered.');
   const [task, setTask] = useState<Task>(() => ({
     id: -1,
     title: '',
