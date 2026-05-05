@@ -1,12 +1,13 @@
+import { useAtom } from 'jotai';
 import { useMemo } from 'react';
 
 import { TodoActions } from '@/domain/TodoAction';
 
+import { todosAtom } from './atoms';
 import { TaskItem } from './task/TaskItem';
-import { useTodos } from './TodosProvider';
 
 const TaskList = () => {
-  const { tasks, dispatch } = useTodos();
+  const [tasks, dispatch] = useAtom(todosAtom);
   console.log('TaskList rendered.');
 
   const sortedTasks = useMemo(() => {

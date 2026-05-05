@@ -1,3 +1,4 @@
+import { useSetAtom, useAtom } from 'jotai';
 import { useState } from 'react';
 
 import type { Priority } from '@/domain/Priority';
@@ -5,8 +6,8 @@ import type { Task } from '@/domain/Task';
 import type { TaskType } from '@/domain/TaskType';
 import { TodoActions } from '@/domain/TodoAction';
 
+import { todosAtom } from './atoms';
 import PrioritySelector from './PrioritySelector';
-import { useTodos } from './TodosProvider';
 import TypeSelector from './TypeSelector';
 
 type TaskInputProps = {
@@ -22,7 +23,7 @@ const TaskInput = ({
   placeholder = 'What needs to be done?',
   className = '',
 }: TaskInputProps) => {
-  const { dispatch } = useTodos();
+  const dispatch = useSetAtom(todosAtom);
 
   console.log('TaskInput rendered.');
   const [task, setTask] = useState<Task>(() => ({
