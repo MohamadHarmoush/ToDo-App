@@ -1,0 +1,96 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "eslint",
+    "unicorn",
+    "react",
+    "oxc",
+    "import",
+    "promise",
+    "jsx-a11y",
+    "typescript"
+  ],
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "error",
+    "perf": "error"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "import/no-unassigned-import": [
+      "error",
+      { "allow": ["**/*.css", "~/lib/opentelemetry/sdk.server"] }
+    ],
+    "no-alert": "error",
+    "no-console": "error",
+    "oxc/bad-bitwise-operator": "error",
+    "react/button-has-type": "error",
+    "complexity": "error",
+    "default-case": "error",
+    "unicorn/no-abusive-eslint-disable": "error",
+    "import/no-cycle": "error",
+    "react/no-danger": "error",
+    "unicorn/no-document-cookie": "error",
+    "no-empty": "error",
+    "no-empty-function": "error",
+    "unicorn/no-length-as-slice-end": "error",
+    "unicorn/no-magic-array-flat-depth": "error",
+    "no-param-reassign": "error",
+    "no-plusplus": "error",
+    "no-proto": "error",
+    "no-regex-spaces": "error",
+    "import/no-relative-parent-imports": "error",
+    "no-sequences": "error",
+    "react/no-unknown-property": "error",
+    "unicorn/no-useless-error-capture-stack-trace": "error",
+    "no-var": "error",
+    "unicorn/prefer-module": "error",
+    "unicorn/prefer-number-properties": "error",
+    "promise/spec-only": "error",
+    "eslint/max-lines-per-function": ["error", { "max": 80 }],
+    "typescript/strict-boolean-expressions": "off",
+    "@typescript-eslint/prefer-readonly-parameter-types": "off"
+  },
+  "ignorePatterns": ["ci/"],
+  "settings": {},
+  "env": {
+    "builtin": true
+  },
+  "globals": {},
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "plugins": [
+        "eslint",
+        "unicorn",
+        "react",
+        "react-perf",
+        "oxc",
+        "import",
+        "promise",
+        "jsx-a11y",
+        "vitest"
+      ],
+      "rules": {
+        "eslint/max-lines-per-function": "off"
+      }
+    },
+    {
+      "files": ["e2e/src/fixtures/**/*.ts"],
+      "rules": {
+        "react-hooks/rules-of-hooks": "off"
+      }
+    },
+    {
+      "files": ["app/features/s3/queries.ts", "app/features/s3/components/atomCards.tsx"],
+      "rules": {
+        "@typescript-eslint/no-deprecated": "off"
+      }
+    }
+  ]
+}
