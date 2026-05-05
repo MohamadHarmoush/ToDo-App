@@ -5,13 +5,17 @@ import type { Task } from '@/domain/Task';
 import type { TodoAction } from '@/domain/TodoAction';
 import { storeTasks, getStoredTasks } from '@/utils/TaskStorage';
 
-const TodosContext = createContext<Task[]>([]);
-const TodosDispatchContext = createContext<React.Dispatch<TodoAction>>(() => {
-  // No-op default dispatch
+type TodosContextValue = {
+  tasks: Task[];
+  dispatch: React.Dispatch<TodoAction>;
+};
+
+const TodosContext = createContext<TodosContextValue>({
+  tasks: [],
+  dispatch: () => {},
 });
 
 export const useTodos = () => useContext(TodosContext);
-export const useTodosDispatch = () => useContext(TodosDispatchContext);
 
 const taskReducer = (prevState: Task[], action: TodoAction): Task[] => {
   switch (action.type) {
@@ -37,9 +41,5 @@ export const TodosProvider = ({ children }: TodosProviderProps) => {
     storeTasks(tasks);
   }, [tasks]);
 
-  return (
-    <TodosContext value={tasks}>
-      <TodosDispatchContext value={dispatch}>{children}</TodosDispatchContext>
-    </TodosContext>
-  );
+  return <TodosContext value={{ tasks, dispatch }}>{children}</TodosContext>;
 };

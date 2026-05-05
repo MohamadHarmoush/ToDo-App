@@ -3,11 +3,10 @@ import { useMemo } from 'react';
 import { TodoActions } from '@/domain/TodoAction';
 
 import { TaskItem } from './task/TaskItem';
-import { useTodos, useTodosDispatch } from './TodosProvider';
+import { useTodos } from './TodosProvider';
 
 const TaskList = () => {
-  const tasks = useTodos();
-  const dispatch = useTodosDispatch();
+  const { tasks, dispatch } = useTodos();
 
   const sortedTasks = useMemo(() => {
     const completedTasks = tasks.filter((task) => task.isComplete);
