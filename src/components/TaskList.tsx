@@ -1,21 +1,23 @@
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 
 import { TodoActions } from '@/domain/TodoAction';
 
-import { todosAtom } from './atoms';
+import { tasksAtom, sortedTasksAtom } from './atoms';
 import { TaskItem } from './task/TaskItem';
 
 const TaskList = () => {
-  const [tasks, dispatch] = useAtom(todosAtom);
+  const [tasks, dispatch] = useAtom(tasksAtom);
   console.log('TaskList rendered.');
 
-  const sortedTasks = useMemo(() => {
+  // we used sortedTodosAtom instead of the below
+  /*const sortedTasks = useMemo(() => {
     const completedTasks = tasks.filter((task) => task.isComplete);
     const pendingTasks = tasks.filter((task) => !task.isComplete);
     return [...pendingTasks, ...completedTasks];
-  }, [tasks]);
+  }, [tasks]); */
 
+  const sortedTasks = useAtomValue(sortedTasksAtom);
   const completedCount = useMemo(() => tasks.filter((task) => task.isComplete).length, [tasks]);
 
   return (

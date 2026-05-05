@@ -6,7 +6,7 @@ import type { Task } from '@/domain/Task';
 import type { TaskType } from '@/domain/TaskType';
 import { TodoActions } from '@/domain/TodoAction';
 
-import { todosAtom } from './atoms';
+import { tasksAtom } from './atoms';
 import PrioritySelector from './PrioritySelector';
 import TypeSelector from './TypeSelector';
 
@@ -23,7 +23,7 @@ const TaskInput = ({
   placeholder = 'What needs to be done?',
   className = '',
 }: TaskInputProps) => {
-  const dispatch = useSetAtom(todosAtom);
+  const dispatch = useSetAtom(tasksAtom);
 
   console.log('TaskInput rendered.');
   const [task, setTask] = useState<Task>(() => ({
