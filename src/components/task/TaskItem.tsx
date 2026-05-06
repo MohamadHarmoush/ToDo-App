@@ -1,6 +1,9 @@
+import { useSetAtom } from 'jotai';
 import { useState } from 'react';
 
 import type { Task } from '@/domain/Task';
+
+import { removeTaskAtom, updateTaskAtom } from '../atoms';
 
 import { Checkbox } from './Checkbox';
 import { TaskActions } from './TaskActions';
@@ -11,17 +14,13 @@ import { TaskTitle } from './TaskTitle';
 type Props = {
   task: Task;
   className?: string;
-  onUpdate: (task: Task) => void;
-  onRemove: (taskId: number) => void;
 };
 
-export const TaskItem = ({ task, className = '', onUpdate, onRemove }: Props) => {
+export const TaskItem = ({ task, className = '' }: Props) => {
   console.log('TaskItem rendered.');
   const [isExpanded, setIsExpand] = useState(false);
-
-  const handleOnCheckClick = (value: boolean) => {
-    onUpdate({ ...task, isComplete: value });
-  };
+  const updateTask = useSetAtom(updateTaskAtom);
+  const removeTask = useSetAtom(removeTaskAtom);
 
   const toggleExpand = () => {
     setIsExpand((prev) => !prev);
@@ -33,14 +32,16 @@ export const TaskItem = ({ task, className = '', onUpdate, onRemove }: Props) =>
         <Checkbox
           id={`task-complete-${task.id}`}
           checked={task.isComplete}
-          onChange={handleOnCheckClick}
+          onChange={(value: boolean) => {
+            updateTask({ ...task, isComplete: value });
+          }}
         />
 
         <TaskTitle
           title={task.title}
           isComplete={task.isComplete}
           onClick={() => {
-            handleOnCheckClick(!task.isComplete);
+            updateTask({ ...task, isComplete: !task.isComplete });
           }}
         />
 
@@ -49,7 +50,7 @@ export const TaskItem = ({ task, className = '', onUpdate, onRemove }: Props) =>
           expanded={isExpanded}
           onToggle={toggleExpand}
           onRemove={() => {
-            onRemove(task.id);
+            removeTask(task.id);
           }}
         />
       </div>
@@ -60,7 +61,7 @@ export const TaskItem = ({ task, className = '', onUpdate, onRemove }: Props) =>
         expanded={isExpanded}
         value={task.notes}
         onUpdate={(notes) => {
-          onUpdate({ ...task, notes: notes });
+          updateTask({ ...task, notes: notes });
         }}
       />
     </div>

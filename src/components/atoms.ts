@@ -1,12 +1,28 @@
 import { atom } from 'jotai';
-import { atomWithReducer } from 'jotai/utils';
+import { atomWithStorage } from 'jotai/utils';
 
 import type { Task } from '@/domain/Task';
+import type { TodoAction } from '@/domain/TodoAction';
+import { TodoActions } from '@/domain/TodoAction';
 import { taskReducer } from '@/utils/TaskReducer';
-import { getStoredTasks } from '@/utils/TaskStorage';
+import { getStoredTasks, storeTasks, TASKS_KEY } from '@/utils/TaskStorage';
 
-export const tasksAtom = atomWithReducer(getStoredTasks(), taskReducer);
-export const todos = atom<Task[]>([]);
+const taskStorage = {
+  getItem: (_key: string): Task[] => getStoredTasks(),
+  setItem: (_key: string, value: Task[]): void => storeTasks(value),
+  removeItem: (_key: string): void => localStorage.removeItem(TASKS_KEY),
+};
+
+const baseTasksAtom = atomWithStorage<Task[]>(TASKS_KEY, [], taskStorage);
+
+export const tasksAtom = atom(
+  (get) => get(baseTasksAtom),
+  (get, set, action: TodoAction) => {
+    const currentTasks = get(baseTasksAtom);
+    const newTasks = taskReducer(currentTasks, action);
+    set(baseTasksAtom, newTasks);
+  }
+);
 
 export const sortedTasksAtom = atom((get) => {
   const tasks = get(tasksAtom);
@@ -15,37 +31,24 @@ export const sortedTasksAtom = atom((get) => {
   return [...pendingTasks, ...completedTasks];
 });
 
-//another way of using atom
-// export const writableSortedAtom = atom<Task[], [Task[]], void>(
-//   // Read function - returns the sorted tasks
-//   (get) => {
-//     const tasks = get(tasksAtom);
-//     const completed = tasks.filter((t) => t.isComplete);
-//     const pending = tasks.filter((t) => !t.isComplete);
-//     return [...pending, ...completed];
-//   },
+export const addTaskAtom = atom(null, (_, set, task: Task) => {
+  const trimmedTitle = task.title.trim();
+  if (!trimmedTitle) return;
 
-//   // Write function - receives typed newTasks
-//   (get, set, newTasks: Task[]) => {
-//     // Since tasksAtom uses atomWithReducer, dispatch an action
-//     // You'll need a replace/set action in your reducer
-//     set(tasksAtom, { type: 'SET', payload: { tasks: newTasks } });
-//   },
-// );
+  const action = TodoActions.add({ ...task, title: trimmedTitle, id: Date.now() });
 
-//another way
-/* export const todosAtomWithStorage = atomWithStorage<Task[]>(TASKS_KEY, [], {
-  getItem: (key) => {
-    const storedTasks = localStorage.getItem(key);
-    if (!storedTasks) return [];
-    try {
-      const parsed: unknown = JSON.parse(storedTasks);
-      if (!Array.isArray(parsed)) return [];
-      return parsed.filter((item: unknown) => isValidTask(item));
-    } catch {
-      return [];
-    }
-  },
-  setItem: (key, value) => localStorage.setItem(key, JSON.stringify(value)),
-  removeItem: (key) => localStorage.removeItem(key),
-}); */
+  // Dispatch to tasksAtom - updates state AND auto-persists to localStorage
+  set(tasksAtom, action);
+});
+
+// Action atom to update a task
+export const updateTaskAtom = atom(null, (_, set, task: Task) => {
+  const action = TodoActions.update(task);
+  set(tasksAtom, action);
+});
+
+// Action atom to remove a task
+export const removeTaskAtom = atom(null, (_, set, taskId: number) => {
+  const action = TodoActions.remove(taskId);
+  set(tasksAtom, action);
+});
