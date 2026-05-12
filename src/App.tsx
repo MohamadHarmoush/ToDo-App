@@ -1,25 +1,29 @@
 import { Route, Routes } from 'react-router';
 
-import AppLayout from './components/AppLayout';
 import AboutPage from './pages/about';
 import HomePage from './pages/home';
 import NotFoundPage from './pages/not-found';
 import TasksPage from './pages/tasks';
+import AppLayout, { AppContent, AppHeader } from './components/AppLayout';
 
-const App = () => {
-  return (
-    <AppLayout>
-      <AppLayout.AppHeader title='Simple Todo' />
-      <AppLayout.Content>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/tasks' element={<TasksPage />} />
-          <Route path='/about' element={<AboutPage />} />
-          <Route path='*' element={<NotFoundPage />} />
-        </Routes>
-      </AppLayout.Content>
-    </AppLayout>
-  );
-};
+const routes = [
+  { path: '/', element: <HomePage /> },
+  { path: '/tasks', element: <TasksPage /> },
+  { path: '/about', element: <AboutPage /> },
+  { path: '*', element: <NotFoundPage /> },
+];
+
+const App = () => (
+  <AppLayout>
+    <AppHeader title='Simple Todo' />
+    <AppContent>
+      <Routes>
+        {routes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
+      </Routes>
+    </AppContent>
+  </AppLayout>
+);
 
 export default App;
