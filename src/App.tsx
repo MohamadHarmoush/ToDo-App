@@ -1,16 +1,22 @@
+import { Route, Routes } from 'react-router';
+
 import AppLayout from './components/AppLayout';
-import PageHeader from './components/PageHeader';
-import TaskInput from './components/TaskInput';
-import TaskList from './components/TaskList';
+import AboutPage from './pages/about';
+import HomePage from './pages/home';
+import NotFoundPage from './pages/not-found';
+import TasksPage from './pages/tasks';
 
 const App = () => {
   return (
     <AppLayout>
       <AppLayout.AppHeader title='Simple Todo' />
       <AppLayout.Content>
-        <PageHeader title='Focus on what matters' subtitle='Ready to organize your day?' />
-        <TaskInput />
-        <TaskList />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/tasks' element={<TasksPage />} />
+          <Route path='/about' element={<AboutPage />} />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
       </AppLayout.Content>
     </AppLayout>
   );
