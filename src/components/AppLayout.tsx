@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { NavLink } from 'react-router';
+import NavBar from './NavBar';
 
 type AppHeaderProps = {
   title?: string;
@@ -7,14 +8,10 @@ type AppHeaderProps = {
 
 const AppHeader = ({ title }: AppHeaderProps) => (
   <header className='border-b border-gray-700 bg-gray-800/50 px-8 py-4'>
-    <div className='pb-2'>
+    <div className='flex items-center justify-between'>
       <h1 className='text-xl font-bold text-white/80'>{title}</h1>
-    </div>
 
-    <div className='space-x-4'>
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='/tasks'>Tasks</NavLink>
-      <NavLink to='/about'>About</NavLink>
+      <NavBar/>
     </div>
   </header>
 );
