@@ -1,6 +1,44 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 body {
   background-color: #0f172a; /* slate-900 */
   color: #f8fafc; /* slate-50 */
+}
+
+/* About Page */
+.about {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 12px;
+  background-color: #161b22;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.about h1 {
+  margin-bottom: 1rem;
+}
+
+.about p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* Not found Page */
+.not-found {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #161b22;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.not-found h1 {
+  margin-bottom: 1rem;
+}
+
+.not-found p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }

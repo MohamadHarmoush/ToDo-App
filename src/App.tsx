@@ -1,19 +1,31 @@
-import AppLayout from './components/AppLayout';
-import PageHeader from './components/PageHeader';
-import TaskInput from './components/TaskInput';
-import TaskList from './components/TaskList';
+import { Route, Routes } from 'react-router';
 
-const App = () => {
-  return (
-    <AppLayout>
-      <AppLayout.AppHeader title='Simple Todo' />
-      <AppLayout.Content>
-        <PageHeader title='Focus on what matters' subtitle='Ready to organize your day?' />
-        <TaskInput />
-        <TaskList />
-      </AppLayout.Content>
-    </AppLayout>
-  );
-};
+import AppLayout, { AppContent, AppHeader } from './components/AppLayout';
+import AboutPage from './pages/about';
+import HomePage from './pages/home';
+import NotFoundPage from './pages/not-found';
+import TaskDetailsPage from './pages/task-details';
+import TasksPage from './pages/tasks';
+
+const routes = [
+  { path: '/', element: <HomePage /> },
+  { path: '/tasks', element: <TasksPage /> },
+  { path: '/about', element: <AboutPage /> },
+  { path: '/task/:id', element: <TaskDetailsPage /> },
+  { path: '*', element: <NotFoundPage /> },
+];
+
+const App = () => (
+  <AppLayout>
+    <AppHeader title='Simple Todo' />
+    <AppContent>
+      <Routes>
+        {routes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
+        ))}
+      </Routes>
+    </AppContent>
+  </AppLayout>
+);
 
 export default App;

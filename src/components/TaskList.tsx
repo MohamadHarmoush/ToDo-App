@@ -1,7 +1,5 @@
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
-
-import { TodoActions } from '@/domain/TodoAction';
 
 import { tasksAtom, sortedTasksAtom } from './atoms';
 import { TaskItem } from './task/TaskItem';
@@ -21,16 +19,7 @@ const TaskList = () => {
           : ' No tasks are done yet.'}
       </h1>
       {sortedTasks.map((task) => (
-        <TaskItem
-          task={task}
-          key={task.id}
-          // onUpdate={(updatedTask) => {
-          //   dispatch(TodoActions.update(updatedTask));
-          // }}
-          // onRemove={(taskId) => {
-          //   dispatch(TodoActions.remove(taskId));
-          // }}
-        />
+        <TaskItem task={task} key={task.id} />
       ))}
     </div>
   );

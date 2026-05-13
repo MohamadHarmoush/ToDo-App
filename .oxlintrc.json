@@ -1,15 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "eslint",
-    "unicorn",
-    "react",
-    "oxc",
-    "import",
-    "promise",
-    "jsx-a11y",
-    "typescript"
-  ],
+  "plugins": ["eslint", "unicorn", "react", "oxc", "import", "promise", "jsx-a11y", "typescript"],
   "options": {
     "typeAware": true,
     "typeCheck": true

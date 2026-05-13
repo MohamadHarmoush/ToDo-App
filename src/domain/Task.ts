@@ -1,5 +1,5 @@
-import type { Priority } from "./Priority";
-import type { TaskType } from "./TaskType";
+import type { Priority } from './Priority';
+import type { TaskType } from './TaskType';
 
 export type Task = {
   id: number;

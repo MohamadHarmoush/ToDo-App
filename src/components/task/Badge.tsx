@@ -6,14 +6,14 @@ type Props = {
 };
 
 const hexToRgba = (hex: string, alpha: number): string => {
-  const cleanHex = hex.replace("#", "");
+  const cleanHex = hex.replace('#', '');
   const r = Number.parseInt(cleanHex.slice(0, 2), 16);
   const g = Number.parseInt(cleanHex.slice(2, 4), 16);
   const b = Number.parseInt(cleanHex.slice(4, 6), 16);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-export const Badge = ({ label, className = "", bgColor, textColor }: Props) => {
+export const Badge = ({ label, className = '', bgColor, textColor }: Props) => {
   const backgroundColor = bgColor
     ? hexToRgba(bgColor, 0.2)
     : textColor
@@ -22,7 +22,7 @@ export const Badge = ({ label, className = "", bgColor, textColor }: Props) => {
 
   return (
     <div
-      className={`rounded-3xl w-fit px-2 ${className}`}
+      className={`w-fit rounded-3xl px-2 ${className}`}
       style={{
         backgroundColor,
         color: textColor,
