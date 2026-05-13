@@ -1,23 +1,13 @@
 import { useAtomValue } from 'jotai';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { tasksAtom } from '@/components/atoms';
 import { TaskItem } from '@/components/task/TaskItem';
-import type { Task } from '@/domain/Task';
 
 const TaskDetailsPage = () => {
   const { id } = useParams();
-
-  const [task, setTask] = useState<Task | null>(null);
   const tasks = useAtomValue(tasksAtom);
-
-  useEffect(() => {
-    if (id === undefined) return;
-    const taskId = parseInt(id);
-    const foundTask = tasks.find((task) => task.id === taskId);
-    setTask(foundTask ?? null);
-  }, [id, tasks]);
+  const task = tasks.find((t) => t.id === parseInt(id ?? '')) ?? null;
 
   if (!task) {
     return (
