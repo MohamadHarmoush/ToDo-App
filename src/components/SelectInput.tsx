@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import { useState } from 'react';
 
 export type Option<T = string> = {
   value: T;
@@ -16,43 +16,61 @@ type SelectProps<T> = {
 };
 
 const SelectInput = <T,>({
-  name,
-  value,
   options,
+  value,
   defaultColor = '#374151',
   onChange,
   className = '',
 }: SelectProps<T>) => {
-  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    e.preventDefault();
-    const selected = options.find((opt) => String(opt.value) === e.target.value);
-    if (selected) {
-      onChange(selected.value);
-    }
-  };
-  const selectedColor = options.find((option) => option.value === value)?.color ?? defaultColor;
+  const [open, setOpen] = useState(false);
+
+  const selected = options.find((opt) => opt.value === value);
+  const activeColor = selected?.color ?? defaultColor;
 
   return (
-    <select
-      name={name}
-      value={String(value)}
-      onChange={handleChange}
-      style={{
-        color: 'white',
-        background: selectedColor,
-      }}
-      className={`rounded-xl bg-gray-800/80 px-2 outline-none hover:bg-gray-800/80 ${className}`}
+    <div
+      tabIndex={-1}
+      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}
+      className={`relative ${className}`}
     >
-      {options.map((option) => (
-        <option
-          style={option.color ? { color: option.color } : undefined}
-          value={String(option.value)}
-          key={String(option.value)}
+      <button
+        type='button'
+        onClick={() => setOpen((prev) => !prev)}
+        style={{ background: activeColor }}
+        className='flex w-full items-center justify-between gap-2 rounded-xl px-3 py-1.5 text-sm text-white outline-none'
+      >
+        {selected?.label}
+        <svg
+          className={`h-3 w-3 shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}
+          viewBox='0 0 12 12'
+          fill='currentColor'
         >
-          {option.label}
-        </option>
-      ))}
-    </select>
+          <path d='M6 8L1 3h10z' />
+        </svg>
+      </button>
+
+      {open && (
+        <ul className='absolute left-0 top-full z-50 mt-1 min-w-full overflow-hidden rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl'>
+          {options.map((option) => (
+            <li key={String(option.value)}>
+              <button
+                type='button'
+                onClick={() => {
+                  onChange(option.value);
+                  setOpen(false);
+                }}
+                className='flex w-full items-center gap-2 px-3 py-1.5 text-sm text-white hover:bg-gray-800'
+              >
+                {option.color && (
+                  <span className='h-2 w-2 shrink-0 rounded-full' style={{ background: option.color }} />
+                )}
+                {option.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
