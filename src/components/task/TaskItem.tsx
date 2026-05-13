@@ -1,5 +1,6 @@
 import { useSetAtom } from 'jotai';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 import type { Task } from '@/domain/Task';
 
@@ -27,43 +28,45 @@ export const TaskItem = ({ task, className = '' }: Props) => {
   };
 
   return (
-    <div className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}>
-      <div className='flex gap-4'>
-        <Checkbox
-          id={`task-complete-${task.id}`}
-          checked={task.isComplete}
-          onChange={(value: boolean) => {
-            updateTask({ ...task, isComplete: value });
-          }}
-        />
+    <Link to={`/task/${task.id}`}>
+      <div className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}>
+        <div className='flex gap-4'>
+          <Checkbox
+            id={`task-complete-${task.id}`}
+            checked={task.isComplete}
+            onChange={(value: boolean) => {
+              updateTask({ ...task, isComplete: value });
+            }}
+          />
 
-        <TaskTitle
-          title={task.title}
-          isComplete={task.isComplete}
-          onClick={() => {
-            updateTask({ ...task, isComplete: !task.isComplete });
-          }}
-        />
+          <TaskTitle
+            title={task.title}
+            isComplete={task.isComplete}
+            onClick={() => {
+              updateTask({ ...task, isComplete: !task.isComplete });
+            }}
+          />
 
-        <TaskActions
-          className='ml-auto'
+          <TaskActions
+            className='ml-auto'
+            expanded={isExpanded}
+            onToggle={toggleExpand}
+            onRemove={() => {
+              removeTask(task.id);
+            }}
+          />
+        </div>
+
+        <TaskBadges priority={task.priority} type={task.type} />
+
+        <TaskNotes
           expanded={isExpanded}
-          onToggle={toggleExpand}
-          onRemove={() => {
-            removeTask(task.id);
+          value={task.notes}
+          onUpdate={(notes) => {
+            updateTask({ ...task, notes: notes });
           }}
         />
       </div>
-
-      <TaskBadges priority={task.priority} type={task.type} />
-
-      <TaskNotes
-        expanded={isExpanded}
-        value={task.notes}
-        onUpdate={(notes) => {
-          updateTask({ ...task, notes: notes });
-        }}
-      />
-    </div>
+    </Link>
   );
 };

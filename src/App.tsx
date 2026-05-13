@@ -5,11 +5,13 @@ import HomePage from './pages/home';
 import NotFoundPage from './pages/not-found';
 import TasksPage from './pages/tasks';
 import AppLayout, { AppContent, AppHeader } from './components/AppLayout';
+import TaskDetailsPage from './pages/task-details';
 
 const routes = [
   { path: '/', element: <HomePage /> },
   { path: '/tasks', element: <TasksPage /> },
   { path: '/about', element: <AboutPage /> },
+  { path: '/task/:id', element: <TaskDetailsPage /> },
   { path: '*', element: <NotFoundPage /> },
 ];
 

@@ -21,7 +21,7 @@ export const tasksAtom = atom(
     const currentTasks = get(baseTasksAtom);
     const newTasks = taskReducer(currentTasks, action);
     set(baseTasksAtom, newTasks);
-  }
+  },
 );
 
 export const sortedTasksAtom = atom((get) => {
