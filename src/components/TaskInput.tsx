@@ -1,4 +1,4 @@
-import { useSetAtom, useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { useState } from 'react';
 
 import type { Priority } from '@/domain/Priority';

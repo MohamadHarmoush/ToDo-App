@@ -3,7 +3,7 @@ import { RemoveIcon } from './RemoveIcon';
 
 type Props = {
   expanded: boolean;
-  onToggle: () => void;
+  onToggle: (e: React.MouseEvent) => void;
   onRemove: () => void;
   className?: string;
 };
@@ -11,7 +11,11 @@ type Props = {
 export const TaskActions = ({ expanded, onToggle, onRemove, className = '' }: Props) => {
   return (
     <div className={`flex items-start gap-2 ${className}`}>
-      <button type='button' onClick={onToggle} className='flex items-center gap-2 sm:pl-10'>
+      <button
+        type='button'
+        onClick={(e) => onToggle(e)}
+        className='flex items-center gap-2 sm:pl-10'
+      >
         <span className='hidden sm:inline'>{expanded ? 'collapse' : 'expand'}</span>
         <ArrowIcon direction={expanded ? 'up' : 'down'} />
       </button>

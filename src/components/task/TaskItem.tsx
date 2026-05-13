@@ -23,22 +23,23 @@ export const TaskItem = ({ task, className = '' }: Props) => {
   const updateTask = useSetAtom(updateTaskAtom);
   const removeTask = useSetAtom(removeTaskAtom);
 
-  const toggleExpand = () => {
+  const toggleExpand = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsExpand((prev) => !prev);
   };
 
   return (
-    <Link to={`/task/${task.id}`}>
-      <div className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}>
-        <div className='flex gap-4'>
-          <Checkbox
-            id={`task-complete-${task.id}`}
-            checked={task.isComplete}
-            onChange={(value: boolean) => {
-              updateTask({ ...task, isComplete: value });
-            }}
-          />
+    <div className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}>
+      <div className='flex gap-4'>
+        <Checkbox
+          id={`task-complete-${task.id}`}
+          checked={task.isComplete}
+          onChange={(value: boolean) => {
+            updateTask({ ...task, isComplete: value });
+          }}
+        />
 
+        <Link to={`/task/${task.id}`} className='flex-1'>
           <TaskTitle
             title={task.title}
             isComplete={task.isComplete}
@@ -46,27 +47,27 @@ export const TaskItem = ({ task, className = '' }: Props) => {
               updateTask({ ...task, isComplete: !task.isComplete });
             }}
           />
+        </Link>
 
-          <TaskActions
-            className='ml-auto'
-            expanded={isExpanded}
-            onToggle={toggleExpand}
-            onRemove={() => {
-              removeTask(task.id);
-            }}
-          />
-        </div>
-
-        <TaskBadges priority={task.priority} type={task.type} />
-
-        <TaskNotes
+        <TaskActions
+          className='ml-auto'
           expanded={isExpanded}
-          value={task.notes}
-          onUpdate={(notes) => {
-            updateTask({ ...task, notes: notes });
+          onToggle={toggleExpand}
+          onRemove={() => {
+            removeTask(task.id);
           }}
         />
       </div>
-    </Link>
+
+      <TaskBadges priority={task.priority} type={task.type} />
+
+      <TaskNotes
+        expanded={isExpanded}
+        value={task.notes}
+        onUpdate={(notes) => {
+          updateTask({ ...task, notes: notes });
+        }}
+      />
+    </div>
   );
 };

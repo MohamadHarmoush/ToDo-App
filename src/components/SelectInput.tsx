@@ -50,7 +50,7 @@ const SelectInput = <T,>({
       </button>
 
       {open && (
-        <ul className='absolute left-0 top-full z-50 mt-1 min-w-full overflow-hidden rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl'>
+        <ul className='absolute top-full left-0 z-50 mt-1 min-w-full overflow-hidden rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl'>
           {options.map((option) => (
             <li key={String(option.value)}>
               <button
@@ -62,7 +62,10 @@ const SelectInput = <T,>({
                 className='flex w-full items-center gap-2 px-3 py-1.5 text-sm text-white hover:bg-gray-800'
               >
                 {option.color && (
-                  <span className='h-2 w-2 shrink-0 rounded-full' style={{ background: option.color }} />
+                  <span
+                    className='h-2 w-2 shrink-0 rounded-full'
+                    style={{ background: option.color }}
+                  />
                 )}
                 {option.label}
               </button>
