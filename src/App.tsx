@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router';
 
+import AppLayout, { AppContent, AppHeader } from './components/AppLayout';
 import AboutPage from './pages/about';
 import HomePage from './pages/home';
 import NotFoundPage from './pages/not-found';
-import TasksPage from './pages/tasks';
-import AppLayout, { AppContent, AppHeader } from './components/AppLayout';
 import TaskDetailsPage from './pages/task-details';
+import TasksPage from './pages/tasks';
 
 const routes = [
   { path: '/', element: <HomePage /> },

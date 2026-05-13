@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Link } from 'react-router';
 
 import NavBar from './NavBar';
 
@@ -7,19 +8,21 @@ type AppHeaderProps = {
 };
 
 const AppHeader = ({ title }: AppHeaderProps) => (
-  <header className='border-b border-gray-700 bg-gray-800/50 px-8 py-4'>
-    <div className='flex items-center justify-between'>
-      <h1 className='text-xl font-bold text-white/80'>{title}</h1>
+  <Link to='/'>
+    <header className='border-b border-gray-700 bg-gray-800/50 px-8 py-4'>
+      <div className='flex items-center justify-between'>
+        <h1 className='text-xl font-bold text-white/80'>{title}</h1>
 
-      <NavBar
-        navItems={[
-          { label: 'Home', link: '/' },
-          { label: 'Tasks', link: '/tasks' },
-          { label: 'About', link: '/about' },
-        ]}
-      />
-    </div>
-  </header>
+        <NavBar
+          navItems={[
+            { label: 'Home', link: '/' },
+            { label: 'Tasks', link: '/tasks' },
+            { label: 'About', link: '/about' },
+          ]}
+        />
+      </div>
+    </header>
+  </Link>
 );
 
 const Content = ({ children }: { children: ReactNode }) => (
