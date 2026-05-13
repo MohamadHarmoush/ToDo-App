@@ -1,5 +1,5 @@
+import { useForm } from '@tanstack/react-form';
 import { useSetAtom } from 'jotai';
-import { useState } from 'react';
 
 import type { Task } from '@/domain/Task';
 
@@ -8,20 +8,31 @@ import PrioritySelector from './PrioritySelector';
 import { TaskNotes } from './task/TaskNotes';
 import TypeSelector from './TypeSelector';
 
-const TaskForm = () => {
-  const [task, setTask] = useState<Task>(() => ({
-    id: -1,
-    title: '',
-    priority: 'Medium',
-    type: 'Personal',
-    notes: '',
-    isComplete: false,
-  }));
+type TaskFormInput = Pick<Task, 'title' | 'priority' | 'type' | 'notes'>;
 
+const formDefaultValues: TaskFormInput = {
+  title: '',
+  priority: 'Medium',
+  type: 'Personal',
+  notes: '',
+};
+
+const TaskForm = () => {
   const addTask = useSetAtom(addTaskAtom);
-  const handleChange = (name: string, value: string) => {
-    setTask((prevTask) => ({ ...prevTask, [name]: value }));
-  };
+  const form = useForm({
+    defaultValues: formDefaultValues,
+    onSubmit: ({ value }) => {
+      const task: Task = {
+        id: Date.now(),
+        title: value.title,
+        priority: value.priority,
+        type: value.type,
+        notes: value.notes,
+        isComplete: false,
+      };
+      addTask(task);
+    },
+  });
 
   return (
     <div className='rounded-2xl border border-gray-700 bg-gray-900 p-5 shadow-lg'>
@@ -31,62 +42,95 @@ const TaskForm = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          addTask(task);
+          e.stopPropagation();
         }}
         className={`flex flex-col gap-4 transition-colors hover:border-gray-600`}
       >
-        <div className='flex flex-col gap-1'>
-          <label className='text-sm text-gray-400'>Title</label>
-          <input
-            className='rounded-lg border border-gray-700 bg-gray-800 p-2 text-white placeholder-gray-500'
-            type='text'
-            name='title'
-            value={task.title}
-            placeholder='What needs to be done?'
-            onChange={(e) => {
-              handleChange(e.target.name, e.target.value);
-            }}
-          />
-        </div>
+        <form.Field
+          name='title'
+          validators={{
+            onSubmit: ({ value }) => {
+              if (value.length < 3) return 'The title must be at least 3 characters long';
+            },
+          }}
+          children={(field) => (
+            <div className='flex flex-col gap-1'>
+              <label className='text-sm text-gray-400'>Title</label>
+              <input
+                className='rounded-lg border border-gray-700 bg-gray-800 p-2 text-white placeholder-gray-500'
+                type='text'
+                name='title'
+                value={field.state.value}
+                placeholder='What needs to be done?'
+                onChange={(e) => {
+                  field.handleChange(e.target.value);
+                }}
+              />
+              {field.state.meta.errors && (
+                <div className='text-sm text-red-500'>{field.state.meta.errors}</div>
+              )}
+            </div>
+          )}
+        />
 
-        <div className='flex flex-col gap-1'>
-          <label className='text-sm text-gray-400'>Priority</label>
+        <form.Field
+          name='priority'
+          children={(field) => (
+            <div className='flex flex-col gap-1'>
+              <label className='text-sm text-gray-400'>Priority</label>
 
-          <PrioritySelector
-            value={task.priority}
-            onChange={(value) => {
-              handleChange('priority', value);
-            }}
-          />
-        </div>
+              <PrioritySelector
+                value={field.state.value}
+                onChange={(value) => {
+                  field.handleChange(value);
+                }}
+              />
+            </div>
+          )}
+        />
 
-        <div className='flex flex-col gap-1'>
-          <label className='text-sm text-gray-400'>Type</label>
+        <form.Field name='type'>
+          {(field) => (
+            <div className='flex flex-col gap-1'>
+              <label className='text-sm text-gray-400'>Type</label>
 
-          <TypeSelector
-            value={task.type}
-            onChange={(value) => {
-              handleChange('type', value);
-            }}
-          />
-        </div>
-        <div className='flex flex-col gap-1'>
-          <label className='text-sm text-gray-400'>Notes</label>
-          <TaskNotes
-            expanded={true}
-            value={task.notes}
-            onUpdate={(notes) => {
-              handleChange('notes', notes);
-            }}
-          />
-        </div>
-        <button
-          disabled={!task.title}
-          type='submit'
-          className='items-center gap-2 rounded-xl px-8 py-2 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
-        >
-          <span>Add Task</span>
-        </button>
+              <TypeSelector
+                value={field.state.value}
+                onChange={(value) => {
+                  field.handleChange(value);
+                }}
+              />
+            </div>
+          )}
+        </form.Field>
+
+        <form.Field name='notes'>
+          {(field) => (
+            <div className='flex flex-col gap-1'>
+              <label className='text-sm text-gray-400'>Notes</label>
+              <TaskNotes
+                expanded={true}
+                value={field.state.value}
+                onUpdate={(notes) => {
+                  field.handleChange(notes);
+                }}
+              />
+            </div>
+          )}
+        </form.Field>
+
+        <form.Subscribe selector={(state) => state.canSubmit}>
+          {(canSubmit) => (
+            <button
+              disabled={!canSubmit}
+              type='submit'
+              onClick={() => form.handleSubmit()}
+              className='items-center gap-2 rounded-xl px-8 py-2 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
+            >
+              <span>Add Task</span>
+            </button>
+          )}
+        </form.Subscribe>
       </form>
     </div>
   );
