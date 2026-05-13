@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
+    "jotai": "^2.19.1",
     "oxlint-tsgolint": "^0.22.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",

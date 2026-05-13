@@ -1,11 +1,11 @@
+import { useSetAtom, useAtom } from 'jotai';
 import { useState } from 'react';
 
 import type { Priority } from '@/domain/Priority';
 import type { Task } from '@/domain/Task';
 import type { TaskType } from '@/domain/TaskType';
-import { TodoActions } from '@/domain/TodoAction';
-import { useTodos } from './TodosProvider';
 
+import { addTaskAtom } from './atoms';
 import PrioritySelector from './PrioritySelector';
 import TypeSelector from './TypeSelector';
 
@@ -22,8 +22,9 @@ const TaskInput = ({
   placeholder = 'What needs to be done?',
   className = '',
 }: TaskInputProps) => {
-  const { dispatch } = useTodos();
+  const addTask = useSetAtom(addTaskAtom);
 
+  console.log('TaskInput rendered.');
   const [task, setTask] = useState<Task>(() => ({
     id: -1,
     title: '',
@@ -37,18 +38,11 @@ const TaskInput = ({
     setTask((prevTask) => ({ ...prevTask, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    const trimmedTitle = task.title.trim();
-    if (!trimmedTitle) return;
-    dispatch(TodoActions.add({ ...task, title: trimmedTitle, id: Date.now() }));
-    setTask((prevTask) => ({ ...prevTask, title: '' }));
-  };
-
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        handleSubmit();
+        addTask(task);
       }}
       className={`rounded-xl border border-gray-800 p-2 transition-colors hover:border-gray-600 hover:bg-gray-800 ${className} flex flex-wrap gap-2`}
     >
