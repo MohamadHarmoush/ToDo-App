@@ -1,5 +1,5 @@
-import type { Task } from "@/domain/Task";
-import type { TodoAction } from "@/domain/TodoAction";
+import type { Task } from '@/domain/Task';
+import type { TodoAction } from '@/domain/TodoAction';
 
 export const taskReducer = (prevState: Task[], action: TodoAction): Task[] => {
   switch (action.type) {
