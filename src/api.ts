@@ -1,23 +1,33 @@
+import * as v from 'valibot';
+
+import { TaskArraySchema, TaskFormInputSchema, TaskSchema } from './domain/schemas';
 import type { Task } from './domain/Task';
 import type { TaskFormInput } from './domain/TaskFormInput';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
+async function validateResponse<T>(response: Response, schema: v.GenericSchema): Promise<T> {
+  const data = await response.json();
+  return v.parse(schema, data) as T;
+}
+
 export async function fetchTasks(): Promise<Task[]> {
   const response = await fetch(`${API_URL}/todos`);
   if (!response.ok) throw new Error(`Fetching tasks failed: ${response.statusText}`);
-  return response.json();
+  return validateResponse(response, TaskArraySchema);
 }
 
 export async function createTask(input: TaskFormInput): Promise<Task> {
+  const validatedInput = v.parse(TaskFormInputSchema, input);
+
   const response = await fetch(`${API_URL}/todos`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
+    body: JSON.stringify(validatedInput),
   });
 
   if (!response.ok) throw new Error(`Create task failed: ${response.statusText}`);
-  return response.json();
+  return validateResponse(response, TaskSchema);
 }
 
 export async function updateTask(task: Task): Promise<Task> {
@@ -28,7 +38,7 @@ export async function updateTask(task: Task): Promise<Task> {
   });
 
   if (!response.ok) throw new Error(`Update task failed: ${response.statusText}`);
-  return response.json();
+  return validateResponse(response, TaskSchema);
 }
 
 export async function deleteTask(id: string): Promise<void> {

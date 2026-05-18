@@ -1,7 +1,9 @@
 import { useForm } from '@tanstack/react-form';
 import { useSetAtom } from 'jotai';
+import * as v from 'valibot';
 
 import { createTask } from '@/api';
+import { TaskFormInputSchema, TitleSchema } from '@/domain/schemas';
 import type { TaskFormInput } from '@/domain/TaskFormInput';
 
 import { addTaskAtom } from './atoms';
@@ -14,6 +16,11 @@ const formDefaultValues: TaskFormInput = {
   priority: 'Medium',
   type: 'Personal',
   notes: '',
+};
+
+const validateTitle = (value: string): string | undefined => {
+  const result = v.safeParse(TitleSchema, value);
+  return !result.success ? result.issues[0]?.message : undefined;
 };
 
 const TaskForm = () => {
@@ -49,11 +56,7 @@ const TaskForm = () => {
         <form.Field
           name='title'
           validators={{
-            onChange: ({ value }) => {
-              if (value.trim().length === 0) return 'Title is required';
-              if (value.trim().length < 3) return 'Title must be at least 3 characters';
-              if (value.trim().length > 100) return 'Title must be at most 100 characters';
-            },
+            onChange: ({ value }) => validateTitle(value),
           }}
           children={(field) => (
             <div className='flex flex-col gap-1'>

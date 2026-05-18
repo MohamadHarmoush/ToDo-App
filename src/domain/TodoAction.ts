@@ -3,7 +3,7 @@ import type { Task } from './Task';
 export type TodoAction =
   | { type: 'ADD_TODO'; payload: Task }
   | { type: 'UPDATE_TODO'; payload: Task }
-  | { type: 'SET_TODOS'; payload: Task[]}
+  | { type: 'SET_TODOS'; payload: Task[] }
   | { type: 'REMOVE_TODO'; payload: { id: string } };
 
 export const TodoActions = {
