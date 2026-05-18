@@ -24,13 +24,14 @@ const TaskForm = () => {
     onSubmit: ({ value }) => {
       const task: Task = {
         id: Date.now(),
-        title: value.title,
+        title: value.title.trim(),
         priority: value.priority,
         type: value.type,
-        notes: value.notes,
+        notes: value.notes.trim(),
         isComplete: false,
       };
       addTask(task);
+      form.reset();
     },
   });
 
@@ -49,8 +50,10 @@ const TaskForm = () => {
         <form.Field
           name='title'
           validators={{
-            onSubmit: ({ value }) => {
-              if (value.length < 3) return 'The title must be at least 3 characters long';
+            onChange: ({ value }) => {
+              if (value.trim().length === 0) return 'Title is required';
+              if (value.trim().length < 3) return 'Title must be at least 3 characters';
+              if (value.trim().length > 100) return 'Title must be at most 100 characters';
             },
           }}
           children={(field) => (
@@ -66,8 +69,8 @@ const TaskForm = () => {
                   field.handleChange(e.target.value);
                 }}
               />
-              {field.state.meta.errors && (
-                <div className='text-sm text-red-500'>{field.state.meta.errors}</div>
+              {field.state.meta.errors.length > 0 && (
+                <span className='text-sm text-red-500'>{field.state.meta.errors[0]}</span>
               )}
             </div>
           )}
