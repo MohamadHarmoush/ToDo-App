@@ -2,8 +2,7 @@ import { useForm } from '@tanstack/react-form';
 import { useSetAtom } from 'jotai';
 import * as v from 'valibot';
 
-import { createTask } from '@/api';
-import { TaskFormInputSchema, TitleSchema } from '@/domain/schemas';
+import { TitleSchema } from '@/domain/schemas';
 import type { TaskFormInput } from '@/domain/TaskFormInput';
 
 import { addTaskAtom } from './atoms';
