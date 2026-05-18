@@ -1,14 +1,13 @@
 import { useForm } from '@tanstack/react-form';
 import { useSetAtom } from 'jotai';
 
-import type { Task } from '@/domain/Task';
+import { createTask } from '@/api';
+import type { TaskFormInput } from '@/domain/TaskFormInput';
 
 import { addTaskAtom } from './atoms';
 import PrioritySelector from './PrioritySelector';
 import { TaskNotes } from './task/TaskNotes';
 import TypeSelector from './TypeSelector';
-
-type TaskFormInput = Pick<Task, 'title' | 'priority' | 'type' | 'notes'>;
 
 const formDefaultValues: TaskFormInput = {
   title: '',
@@ -21,16 +20,15 @@ const TaskForm = () => {
   const addTask = useSetAtom(addTaskAtom);
   const form = useForm({
     defaultValues: formDefaultValues,
-    onSubmit: ({ value }) => {
-      const task: Task = {
-        id: Date.now(),
+    onSubmit: async ({ value }) => {
+      const input: TaskFormInput = {
         title: value.title.trim(),
         priority: value.priority,
         type: value.type,
         notes: value.notes.trim(),
-        isComplete: false,
       };
-      addTask(task);
+
+      addTask(input);
       form.reset();
     },
   });
@@ -44,6 +42,7 @@ const TaskForm = () => {
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          form.handleSubmit();
         }}
         className={`flex flex-col gap-4 transition-colors hover:border-gray-600`}
       >
@@ -70,7 +69,7 @@ const TaskForm = () => {
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className='text-sm text-red-500'>{field.state.meta.errors[0]}</span>
+                <span className='text-sm text-red-500'>{String(field.state.meta.errors[0])}</span>
               )}
             </div>
           )}
@@ -127,7 +126,6 @@ const TaskForm = () => {
             <button
               disabled={!canSubmit}
               type='submit'
-              onClick={() => form.handleSubmit()}
               className='items-center gap-2 rounded-xl px-8 py-2 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
             >
               <span>Add Task</span>

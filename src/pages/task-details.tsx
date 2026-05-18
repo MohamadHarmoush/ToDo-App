@@ -7,7 +7,7 @@ import { TaskItem } from '@/components/task/TaskItem';
 const TaskDetailsPage = () => {
   const { id } = useParams();
   const tasks = useAtomValue(tasksAtom);
-  const task = tasks.find((t) => t.id === parseInt(id ?? '')) ?? null;
+  const task = tasks.find((t) => t.id === id) ?? null;
 
   if (!task) {
     return (
