@@ -18,7 +18,7 @@ async function validateResponse<S extends v.GenericSchema>(
 export async function fetchTasks(): Promise<Task[]> {
   const response = await fetch(`${API_URL}/todos`);
   if (!response.ok) throw new Error(`Fetching tasks failed: ${response.statusText}`);
-  await delay(500);  // just to show the loading indicator, since the response is very quick.
+  await delay(500); // just to show the loading indicator, since the response is very quick.
 
   return validateResponse(response, TaskArraySchema);
 }
@@ -46,6 +46,15 @@ export async function updateTask(task: Task): Promise<Task> {
 
   if (!response.ok) throw new Error(`Update task failed: ${response.statusText}`);
   return validateResponse(response, TaskSchema);
+}
+
+export async function fetchTaskDetails(taskId: string): Promise<Task> {
+  console.log('fetchTaskDetails:', taskId);
+  const tasks = await fetchTasks();
+  const foundTask = tasks.find((task) => task.id == taskId);
+  if (!foundTask) throw new Error(` No tasks found with id: ${taskId}`);
+
+  return v.parse(TaskSchema, foundTask);
 }
 
 export async function deleteTask(id: string): Promise<void> {
