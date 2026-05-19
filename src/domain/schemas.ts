@@ -2,7 +2,6 @@ import * as v from 'valibot';
 
 export const TitleSchema = v.pipe(
   v.string(),
-  v.minLength(1, 'Title is required'),
   v.minLength(3, 'Title must be at least 3 characters'),
   v.maxLength(100, 'Title must be at most 100 characters'),
 );

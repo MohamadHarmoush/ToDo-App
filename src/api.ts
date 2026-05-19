@@ -6,9 +6,12 @@ import type { TaskFormInput } from './domain/TaskFormInput';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
-async function validateResponse<T>(response: Response, schema: v.GenericSchema): Promise<T> {
+async function validateResponse<S extends v.GenericSchema>(
+  response: Response,
+  schema: S,
+): Promise<v.InferOutput<S>> {
   const data = await response.json();
-  return v.parse(schema, data) as T;
+  return v.parse(schema, data);
 }
 
 export async function fetchTasks(): Promise<Task[]> {

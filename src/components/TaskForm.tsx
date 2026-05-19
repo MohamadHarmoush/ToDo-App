@@ -1,6 +1,5 @@
 import { useForm } from '@tanstack/react-form';
 import { useSetAtom } from 'jotai';
-import * as v from 'valibot';
 
 import { TitleSchema } from '@/domain/schemas';
 import type { TaskFormInput } from '@/domain/TaskFormInput';
@@ -15,11 +14,6 @@ const formDefaultValues: TaskFormInput = {
   priority: 'Medium',
   type: 'Personal',
   notes: '',
-};
-
-const validateTitle = (value: string): string | undefined => {
-  const result = v.safeParse(TitleSchema, value);
-  return !result.success ? result.issues[0]?.message : undefined;
 };
 
 const TaskForm = () => {
@@ -55,7 +49,7 @@ const TaskForm = () => {
         <form.Field
           name='title'
           validators={{
-            onChange: ({ value }) => validateTitle(value),
+            onChange: TitleSchema,
           }}
           children={(field) => (
             <div className='flex flex-col gap-1'>
@@ -71,7 +65,9 @@ const TaskForm = () => {
                 }}
               />
               {field.state.meta.errors.length > 0 && (
-                <span className='text-sm text-red-500'>{String(field.state.meta.errors[0])}</span>
+                <span className='text-sm text-red-500'>
+                  {String(field.state.meta.errors[0]?.message)}
+                </span>
               )}
             </div>
           )}
