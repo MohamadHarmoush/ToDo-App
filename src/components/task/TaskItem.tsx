@@ -33,18 +33,18 @@ export const TaskItem = ({ task, className = '' }: Props) => {
       <div className='flex gap-4'>
         <Checkbox
           id={`task-complete-${task.id}`}
-          checked={task.isComplete}
+          checked={task.completed}
           onChange={(value: boolean) => {
-            updateTask({ ...task, isComplete: value });
+            updateTask({ ...task, completed: value });
           }}
         />
 
         <Link to={`/task/${task.id}`} className='flex-1'>
           <TaskTitle
             title={task.title}
-            isComplete={task.isComplete}
+            completed={task.completed}
             onClick={() => {
-              updateTask({ ...task, isComplete: !task.isComplete });
+              updateTask({ ...task, completed: !task.completed });
             }}
           />
         </Link>

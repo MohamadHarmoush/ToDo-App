@@ -7,7 +7,7 @@ import { TaskItem } from './task/TaskItem';
 const TaskList = () => {
   const tasks = useAtomValue(tasksAtom);
   const sortedTasks = useAtomValue(sortedTasksAtom);
-  const completedCount = useMemo(() => tasks.filter((task) => task.isComplete).length, [tasks]);
+  const completedCount = useMemo(() => tasks.filter((task) => task.completed).length, [tasks]);
   console.log('TaskList rendered.');
 
   return (

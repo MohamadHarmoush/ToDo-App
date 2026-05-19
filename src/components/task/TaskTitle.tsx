@@ -1,12 +1,12 @@
 type Props = {
   title: string;
-  isComplete: boolean;
+  completed: boolean;
   onClick: () => void;
   className?: string;
 };
 
-export const TaskTitle = ({ title, isComplete, onClick, className = '' }: Props) => {
-  const taskTitleClassName = isComplete ? 'line-through text-gray-400' : '';
+export const TaskTitle = ({ title, completed, onClick, className = '' }: Props) => {
+  const taskTitleClassName = completed ? 'line-through text-gray-400' : '';
 
   return (
     <h1

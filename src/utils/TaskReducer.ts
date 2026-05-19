@@ -9,6 +9,8 @@ export const taskReducer = (prevState: Task[], action: TodoAction): Task[] => {
       return prevState.map((task: Task) => (task.id === action.payload.id ? action.payload : task));
     case 'REMOVE_TODO':
       return prevState.filter((task: Task) => task.id !== action.payload.id);
+    case 'SET_TODOS':
+      return action.payload;
     default:
       return prevState;
   }
