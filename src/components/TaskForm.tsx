@@ -1,10 +1,11 @@
 import { useForm } from '@tanstack/react-form';
-import { useSetAtom } from 'jotai';
+import { useMutation } from '@tanstack/react-query';
+import { ClipLoader } from 'react-spinners';
 
+import { createTask } from '@/api';
 import { TitleSchema } from '@/domain/schemas';
 import type { TaskFormInput } from '@/domain/TaskFormInput';
 
-import { addTaskAtom } from './atoms';
 import PrioritySelector from './PrioritySelector';
 import { TaskNotes } from './task/TaskNotes';
 import TypeSelector from './TypeSelector';
@@ -17,7 +18,12 @@ const formDefaultValues: TaskFormInput = {
 };
 
 const TaskForm = () => {
-  const addTask = useSetAtom(addTaskAtom);
+  const { mutate, error, isPending } = useMutation({
+    mutationFn: createTask,
+    onSuccess: (_result, _variables, _onMutateResult, context) => {
+      context.client.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
   const form = useForm({
     defaultValues: formDefaultValues,
     onSubmit: async ({ value }) => {
@@ -28,7 +34,7 @@ const TaskForm = () => {
         notes: value.notes.trim(),
       };
 
-      addTask(input);
+      mutate(input);
       form.reset();
     },
   });
@@ -126,11 +132,13 @@ const TaskForm = () => {
               type='submit'
               className='items-center gap-2 rounded-xl px-8 py-2 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
             >
-              <span>Add Task</span>
+              {isPending && <ClipLoader size={24} color='white' />}
+              {!isPending && <span>Add Task</span>}
             </button>
           )}
         </form.Subscribe>
       </form>
+      <div className='pt-2 text-sm text-red-500'>{error?.message}</div>
     </div>
   );
 };

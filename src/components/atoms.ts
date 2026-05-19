@@ -1,8 +1,7 @@
 import { atom } from 'jotai';
 
-import { createTask, deleteTask, updateTask } from '@/api';
+import { deleteTask, updateTask } from '@/api';
 import type { Task } from '@/domain/Task';
-import type { TaskFormInput } from '@/domain/TaskFormInput';
 import type { TodoAction } from '@/domain/TodoAction';
 import { TodoActions } from '@/domain/TodoAction';
 import { taskReducer } from '@/utils/TaskReducer';
@@ -24,15 +23,6 @@ export const sortedTasksAtom = atom((get) => {
   const completedTasks = tasks.filter((task) => task.completed);
   const pendingTasks = tasks.filter((task) => !task.completed);
   return [...pendingTasks, ...completedTasks];
-});
-
-export const addTaskAtom = atom(null, async (_, set, input: TaskFormInput) => {
-  try {
-    const task = await createTask(input);
-    set(tasksAtom, TodoActions.add(task));
-  } catch (error) {
-    console.error('Failed to create task:', error);
-  }
 });
 
 // Update task - syncs to backend then updates local state

@@ -3,6 +3,7 @@ import * as v from 'valibot';
 import { TaskArraySchema, TaskFormInputSchema, TaskSchema } from './domain/schemas';
 import type { Task } from './domain/Task';
 import type { TaskFormInput } from './domain/TaskFormInput';
+import { delay } from './utils/helpers';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
@@ -30,6 +31,7 @@ export async function createTask(input: TaskFormInput): Promise<Task> {
   });
 
   if (!response.ok) throw new Error(`Create task failed: ${response.statusText}`);
+  await delay(2000); // just to show the loading indicator, since the response is very quick.
   return validateResponse(response, TaskSchema);
 }
 
