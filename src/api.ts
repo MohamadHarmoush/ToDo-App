@@ -15,8 +15,8 @@ async function validateResponse<S extends v.GenericSchema>(
   return v.parse(schema, data);
 }
 
-export async function fetchTasks(): Promise<Task[]> {
-  const response = await fetch(`${API_URL}/todos`);
+export async function fetchTasks(signal: AbortSignal): Promise<Task[]> {
+  const response = await fetch(`${API_URL}/todos`, { signal });
   if (!response.ok) throw new Error(`Fetching tasks failed: ${response.statusText}`);
   await delay(500); // just to show the loading indicator, since the response is very quick.
 

@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
@@ -18,17 +18,46 @@ type Props = {
 
 export const TaskItem = ({ task, className = '' }: Props) => {
   console.log('TaskItem rendered.');
+  const queryClient = useQueryClient();
   const [isExpanded, setIsExpand] = useState(false);
+
   const updateTaskMutation = useMutation({
     mutationFn: updateTask,
-    onSuccess: (_result, _variables, _onMutateResult, context) => {
-      context.client.invalidateQueries({ queryKey: ['tasks'] });
+    onMutate: async (updatedTask: Task) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks'] });
+      const previousTasks = queryClient.getQueryData<Task[]>(['tasks']);
+      queryClient.setQueryData<Task[]>(['tasks'], (old) =>
+        old?.map((t) => (t.id === updatedTask.id ? updatedTask : t)) ?? []
+      );
+      return { previousTasks };
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(['tasks'], context.previousTasks);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
+
   const removeTaskMutation = useMutation({
     mutationFn: deleteTask,
-    onSuccess: (_result, _variables, _onMutateResult, context) => {
-      context.client.invalidateQueries({ queryKey: ['tasks'] });
+    onMutate: async (deletedId: string) => {
+      await queryClient.cancelQueries({ queryKey: ['tasks'] });
+      const previousTasks = queryClient.getQueryData<Task[]>(['tasks']);
+      queryClient.setQueryData<Task[]>(['tasks'], (old) =>
+        old?.filter((t) => t.id !== deletedId) ?? []
+      );
+      return { previousTasks };
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(['tasks'], context.previousTasks);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 
@@ -53,7 +82,7 @@ export const TaskItem = ({ task, className = '' }: Props) => {
             title={task.title}
             completed={task.completed}
             onClick={() => {
-              updateTask({ ...task, completed: !task.completed });
+              updateTaskMutation.mutate({ ...task, completed: !task.completed });
             }}
           />
         </Link>
@@ -74,7 +103,7 @@ export const TaskItem = ({ task, className = '' }: Props) => {
         expanded={isExpanded}
         value={task.notes}
         onUpdate={(notes) => {
-          updateTask({ ...task, notes: notes });
+          updateTaskMutation.mutate({ ...task, notes: notes });
         }}
       />
     </div>
