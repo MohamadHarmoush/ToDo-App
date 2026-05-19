@@ -1,10 +1,9 @@
-import { useSetAtom } from 'jotai';
+import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
+import { deleteTask, updateTask } from '@/api';
 import type { Task } from '@/domain/Task';
-
-import { removeTaskAtom, updateTaskAtom } from '../atoms';
 
 import { Checkbox } from './Checkbox';
 import { TaskActions } from './TaskActions';
@@ -20,8 +19,18 @@ type Props = {
 export const TaskItem = ({ task, className = '' }: Props) => {
   console.log('TaskItem rendered.');
   const [isExpanded, setIsExpand] = useState(false);
-  const updateTask = useSetAtom(updateTaskAtom);
-  const removeTask = useSetAtom(removeTaskAtom);
+  const updateTaskMutation = useMutation({
+    mutationFn: updateTask,
+    onSuccess: (_result, _variables, _onMutateResult, context) => {
+      context.client.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
+  const removeTaskMutation = useMutation({
+    mutationFn: deleteTask,
+    onSuccess: (_result, _variables, _onMutateResult, context) => {
+      context.client.invalidateQueries({ queryKey: ['tasks'] });
+    },
+  });
 
   const toggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -35,7 +44,7 @@ export const TaskItem = ({ task, className = '' }: Props) => {
           id={`task-complete-${task.id}`}
           checked={task.completed}
           onChange={(value: boolean) => {
-            updateTask({ ...task, completed: value });
+            updateTaskMutation.mutate({ ...task, completed: value });
           }}
         />
 
@@ -54,7 +63,7 @@ export const TaskItem = ({ task, className = '' }: Props) => {
           expanded={isExpanded}
           onToggle={toggleExpand}
           onRemove={() => {
-            removeTask(task.id);
+            removeTaskMutation.mutate(task.id);
           }}
         />
       </div>

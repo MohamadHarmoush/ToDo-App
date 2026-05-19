@@ -1,9 +1,7 @@
 import { atom } from 'jotai';
 
-import { deleteTask, updateTask } from '@/api';
 import type { Task } from '@/domain/Task';
 import type { TodoAction } from '@/domain/TodoAction';
-import { TodoActions } from '@/domain/TodoAction';
 import { taskReducer } from '@/utils/TaskReducer';
 
 // Base atom - backend is source of truth
@@ -23,24 +21,4 @@ export const sortedTasksAtom = atom((get) => {
   const completedTasks = tasks.filter((task) => task.completed);
   const pendingTasks = tasks.filter((task) => !task.completed);
   return [...pendingTasks, ...completedTasks];
-});
-
-// Update task - syncs to backend then updates local state
-export const updateTaskAtom = atom(null, async (_, set, task: Task) => {
-  try {
-    const updatedTask = await updateTask(task);
-    set(tasksAtom, TodoActions.update(updatedTask));
-  } catch (error) {
-    console.error('Failed to update task:', error);
-  }
-});
-
-// Remove task - deletes from backend then removes from local state
-export const removeTaskAtom = atom(null, async (_, set, taskId: string) => {
-  try {
-    await deleteTask(taskId);
-    set(tasksAtom, TodoActions.remove(taskId));
-  } catch (error) {
-    console.error('Failed to delete task:', error);
-  }
 });

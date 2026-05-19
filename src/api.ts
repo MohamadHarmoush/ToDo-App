@@ -18,6 +18,8 @@ async function validateResponse<S extends v.GenericSchema>(
 export async function fetchTasks(): Promise<Task[]> {
   const response = await fetch(`${API_URL}/todos`);
   if (!response.ok) throw new Error(`Fetching tasks failed: ${response.statusText}`);
+  await delay(500);  // just to show the loading indicator, since the response is very quick.
+
   return validateResponse(response, TaskArraySchema);
 }
 
@@ -31,7 +33,7 @@ export async function createTask(input: TaskFormInput): Promise<Task> {
   });
 
   if (!response.ok) throw new Error(`Create task failed: ${response.statusText}`);
-  await delay(2000); // just to show the loading indicator, since the response is very quick.
+  await delay(200); // just to show the loading indicator, since the response is very quick.
   return validateResponse(response, TaskSchema);
 }
 
