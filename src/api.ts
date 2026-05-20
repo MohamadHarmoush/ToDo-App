@@ -50,11 +50,11 @@ export async function updateTask(task: Task): Promise<Task> {
 
 export async function fetchTaskDetails(taskId: string): Promise<Task> {
   console.log('fetchTaskDetails:', taskId);
-  const tasks = await fetchTasks();
-  const foundTask = tasks.find((task) => task.id == taskId);
-  if (!foundTask) throw new Error(` No tasks found with id: ${taskId}`);
+  const response = await fetch(`${API_URL}/todos/${taskId}`);
+  if (!response.ok) throw new Error(`No tasks found with id: ${taskId}`);
 
-  return v.parse(TaskSchema, foundTask);
+  const data = await response.json();
+  return v.parse(TaskSchema, data);
 }
 
 export async function deleteTask(id: string): Promise<void> {

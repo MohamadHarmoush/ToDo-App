@@ -14,9 +14,10 @@ import { TaskTitle } from './TaskTitle';
 type Props = {
   task: Task;
   className?: string;
+  onDelete?: () => void;
 };
 
-export const TaskItem = ({ task, className = '' }: Props) => {
+export const TaskItem = ({ task, className = '', onDelete }: Props) => {
   console.log('TaskItem rendered.');
   const queryClient = useQueryClient();
   const [isExpanded, setIsExpand] = useState(false);
@@ -35,6 +36,9 @@ export const TaskItem = ({ task, className = '' }: Props) => {
       if (context?.previousTasks) {
         queryClient.setQueryData(['tasks'], context.previousTasks);
       }
+    },
+    onSuccess: (updatedTask) => {
+      queryClient.setQueryData<Task>(['task', updatedTask.id], updatedTask);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -55,6 +59,10 @@ export const TaskItem = ({ task, className = '' }: Props) => {
       if (context?.previousTasks) {
         queryClient.setQueryData(['tasks'], context.previousTasks);
       }
+    },
+    onSuccess: (_data, deletedId) => {
+      queryClient.removeQueries({ queryKey: ['task', deletedId] });
+      onDelete?.();
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });

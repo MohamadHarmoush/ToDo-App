@@ -22,6 +22,7 @@ const TaskForm = () => {
     mutationFn: createTask,
     onSuccess: (_result, _variables, _onMutateResult, context) => {
       context.client.invalidateQueries({ queryKey: ['tasks'] });
+      form.reset();
     },
   });
   const form = useForm({
@@ -35,7 +36,6 @@ const TaskForm = () => {
       };
 
       mutate(input);
-      form.reset();
     },
   });
 
