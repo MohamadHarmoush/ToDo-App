@@ -13,11 +13,14 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-form": "^1.32.0",
+    "@tanstack/react-query": "^5.100.10",
+    "@tanstack/react-query-devtools": "^5.100.10",
     "jotai": "^2.19.1",
     "oxlint-tsgolint": "^0.22.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-router": "^7.15.0",
+    "react-spinners": "^0.17.0",
     "tailwindcss": "^4.2.4",
     "valibot": "^1.4.0"
   },

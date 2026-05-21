@@ -3,6 +3,7 @@ import * as v from 'valibot';
 import { TaskArraySchema, TaskFormInputSchema, TaskSchema } from './domain/schemas';
 import type { Task } from './domain/Task';
 import type { TaskFormInput } from './domain/TaskFormInput';
+import { delay } from './utils/helpers';
 
 export const API_URL = import.meta.env.VITE_API_URL;
 
@@ -14,9 +15,11 @@ async function validateResponse<S extends v.GenericSchema>(
   return v.parse(schema, data);
 }
 
-export async function fetchTasks(): Promise<Task[]> {
-  const response = await fetch(`${API_URL}/todos`);
+export async function fetchTasks(signal: AbortSignal): Promise<Task[]> {
+  const response = await fetch(`${API_URL}/todos`, { signal });
   if (!response.ok) throw new Error(`Fetching tasks failed: ${response.statusText}`);
+  await delay(500); // just to show the loading indicator, since the response is very quick.
+
   return validateResponse(response, TaskArraySchema);
 }
 
@@ -30,6 +33,7 @@ export async function createTask(input: TaskFormInput): Promise<Task> {
   });
 
   if (!response.ok) throw new Error(`Create task failed: ${response.statusText}`);
+  await delay(200); // just to show the loading indicator, since the response is very quick.
   return validateResponse(response, TaskSchema);
 }
 
@@ -42,6 +46,15 @@ export async function updateTask(task: Task): Promise<Task> {
 
   if (!response.ok) throw new Error(`Update task failed: ${response.statusText}`);
   return validateResponse(response, TaskSchema);
+}
+
+export async function fetchTaskDetails(taskId: string): Promise<Task> {
+  console.log('fetchTaskDetails:', taskId);
+  const response = await fetch(`${API_URL}/todos/${taskId}`);
+  if (!response.ok) throw new Error(`No tasks found with id: ${taskId}`);
+
+  const data = await response.json();
+  return v.parse(TaskSchema, data);
 }
 
 export async function deleteTask(id: string): Promise<void> {
