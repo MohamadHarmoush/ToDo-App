@@ -32,7 +32,7 @@ const TaskList = () => {
       <div>
         {isLoading && (
           <div className='flex justify-center'>
-            <ClipLoader color='white' />
+            <ClipLoader data-testid='loading-spinner' color='white' />
           </div>
         )}
         {isError && <h1 className='pt-2 text-red-500'>{error.message}</h1>}

@@ -27,8 +27,9 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
     onMutate: async (updatedTask: Task) => {
       await queryClient.cancelQueries({ queryKey: ['tasks'] });
       const previousTasks = queryClient.getQueryData<Task[]>(['tasks']);
-      queryClient.setQueryData<Task[]>(['tasks'], (old) =>
-        old?.map((t) => (t.id === updatedTask.id ? updatedTask : t)) ?? []
+      queryClient.setQueryData<Task[]>(
+        ['tasks'],
+        (old) => old?.map((t) => (t.id === updatedTask.id ? updatedTask : t)) ?? [],
       );
       return { previousTasks };
     },
@@ -50,8 +51,9 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
     onMutate: async (deletedId: string) => {
       await queryClient.cancelQueries({ queryKey: ['tasks'] });
       const previousTasks = queryClient.getQueryData<Task[]>(['tasks']);
-      queryClient.setQueryData<Task[]>(['tasks'], (old) =>
-        old?.filter((t) => t.id !== deletedId) ?? []
+      queryClient.setQueryData<Task[]>(
+        ['tasks'],
+        (old) => old?.filter((t) => t.id !== deletedId) ?? [],
       );
       return { previousTasks };
     },
@@ -75,7 +77,10 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
   };
 
   return (
-    <div className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}>
+    <div
+      data-testid='task-item'
+      className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}
+    >
       <div className='flex gap-4'>
         <Checkbox
           id={`task-complete-${task.id}`}
