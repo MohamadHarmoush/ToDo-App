@@ -1,7 +1,5 @@
 import { userEvent } from '@testing-library/user-event';
-import { wait } from '@testing-library/user-event/dist/cjs/utils/index.js';
 import { http, HttpResponse } from 'msw';
-import { use } from 'react';
 import { describe, it, expect } from 'vitest';
 
 import App from '@/App';
@@ -77,7 +75,7 @@ describe('Tasks Page - Routing & Integration', () => {
   it('shows loading state while fetching tasks & then shows tasks count once the success response is received', async () => {
     server.use(
       http.get('*/todos', async () => {
-        delay(200);
+        await delay(200);
         return HttpResponse.json(mockedTasks);
       }),
     );
@@ -92,7 +90,7 @@ describe('Tasks Page - Routing & Integration', () => {
     );
   });
 
-  it('renders all tasks from the API in the correct order (pending first, then completed)', async () => {
+  it('renders all tasks from the API', async () => {
     server.use(http.get('*/todos', () => HttpResponse.json(mockedTasks)));
 
     render(<App />, { initialEntries: ['/tasks'] });
