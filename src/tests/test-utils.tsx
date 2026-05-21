@@ -10,16 +10,21 @@ const testQueryClient = () =>
     },
   });
 
-function Wrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <QueryClientProvider client={testQueryClient()}>
-      <MemoryRouter>{children}</MemoryRouter>
-    </QueryClientProvider>
-  );
+interface RenderWithRouterOptions extends RenderOptions {
+  initialEntries?: string[];
 }
 
-function customRender(ui: React.ReactElement, options?: RenderOptions) {
-  return render(ui, { wrapper: Wrapper, ...options });
+function customRender(ui: React.ReactElement, options: RenderWithRouterOptions = {}) {
+  const { initialEntries = ['/'], ...renderOptions } = options;
+
+  return render(ui, {
+    wrapper: ({ children }) => (
+      <QueryClientProvider client={testQueryClient()}>
+        <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>
+      </QueryClientProvider>
+    ),
+    ...renderOptions,
+  });
 }
 
 // Get a dropdown/selector button by its label text.

@@ -28,7 +28,7 @@ export const Badge = ({ label, className = '', bgColor, textColor }: Props) => {
         color: textColor,
       }}
     >
-      <h1>{label}</h1>
+      <span>{label}</span>
     </div>
   );
 };
