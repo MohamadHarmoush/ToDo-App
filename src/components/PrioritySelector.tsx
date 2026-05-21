@@ -5,6 +5,7 @@ import type { Option } from './SelectInput';
 
 type PrioritySelectorProps = {
   value: Priority;
+  id?: string;
   onChange: (value: Priority) => void;
 };
 
@@ -14,9 +15,10 @@ const priorities: Option<Priority>[] = [
   { value: 'High', label: 'High', color: priorityColors.High },
 ];
 
-const PrioritySelector = ({ value, onChange }: PrioritySelectorProps) => {
+const PrioritySelector = ({ id, value, onChange }: PrioritySelectorProps) => {
   return (
     <SelectInput
+      id={id}
       name='priority'
       value={value}
       options={priorities}

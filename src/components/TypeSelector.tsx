@@ -4,6 +4,7 @@ import SelectInput from './SelectInput';
 import type { Option } from './SelectInput';
 
 type TypeSelectorProps = {
+  id?: string;
   value: TaskType;
   onChange: (value: TaskType) => void;
 };
@@ -17,9 +18,10 @@ const types: Option<TaskType>[] = [
   { value: 'General', label: 'General', color: taskTypeColors.General },
 ];
 
-const TypeSelector = ({ value, onChange }: TypeSelectorProps) => {
+const TypeSelector = ({ id, value, onChange }: TypeSelectorProps) => {
   return (
     <SelectInput
+      id={id}
       name='type'
       value={value}
       options={types}

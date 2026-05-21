@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { describe, it, expect } from 'vitest';
 
-import { TitleSchema, TaskFormInputSchema, PrioritySchema, TaskTypeSchema } from '@/domain/schemas';
+import { TitleSchema, TaskFormInputSchema } from '@/domain/schemas';
 
 //TitleSchema
 describe('Task schema', () => {

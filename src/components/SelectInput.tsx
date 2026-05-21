@@ -7,6 +7,7 @@ export type Option<T = string> = {
 };
 
 type SelectProps<T> = {
+  id?: string;
   name: string;
   options: Option<T>[];
   value: T;
@@ -17,6 +18,7 @@ type SelectProps<T> = {
 
 const SelectInput = <T,>({
   options,
+  id,
   value,
   defaultColor = '#374151',
   onChange,
@@ -29,6 +31,7 @@ const SelectInput = <T,>({
 
   return (
     <div
+      id={id}
       tabIndex={-1}
       onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}
       className={`relative ${className}`}

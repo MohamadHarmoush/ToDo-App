@@ -86,9 +86,12 @@ const TaskForm = () => {
           name='priority'
           children={(field) => (
             <div className='flex flex-col gap-1'>
-              <label className='text-sm text-gray-400'>Priority</label>
+              <label htmlFor='priority' className='text-sm text-gray-400'>
+                Priority
+              </label>
 
               <PrioritySelector
+                id='priority'
                 value={field.state.value}
                 onChange={(value) => {
                   field.handleChange(value);
@@ -101,9 +104,12 @@ const TaskForm = () => {
         <form.Field name='type'>
           {(field) => (
             <div className='flex flex-col gap-1'>
-              <label className='text-sm text-gray-400'>Type</label>
+              <label htmlFor='type' className='text-sm text-gray-400'>
+                Type
+              </label>
 
               <TypeSelector
+                id='type'
                 value={field.state.value}
                 onChange={(value) => {
                   field.handleChange(value);
@@ -116,7 +122,9 @@ const TaskForm = () => {
         <form.Field name='notes'>
           {(field) => (
             <div className='flex flex-col gap-1'>
-              <label htmlFor='notes' className='text-sm text-gray-400'>Notes</label>
+              <label htmlFor='notes' className='text-sm text-gray-400'>
+                Notes
+              </label>
               <TaskNotes
                 expanded={true}
                 value={field.state.value}
@@ -135,7 +143,7 @@ const TaskForm = () => {
               type='submit'
               className='items-center gap-2 rounded-xl px-8 py-2 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
             >
-              {isPending && <ClipLoader size={24} color='white' />}
+              {isPending && <ClipLoader data-testid='loading-spinner' size={24} color='white' />}
               {!isPending && <span>Add Task</span>}
             </button>
           )}

@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render as mainRender, type RenderOptions } from '@testing-library/react';
+import { render, type RenderOptions, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router';
 
 const testQueryClient = () =>
   new QueryClient({
@@ -10,11 +11,26 @@ const testQueryClient = () =>
   });
 
 function Wrapper({ children }: { children: React.ReactNode }) {
-  return <QueryClientProvider client={testQueryClient()}>{children}</QueryClientProvider>;
+  return (
+    <QueryClientProvider client={testQueryClient()}>
+      <MemoryRouter>{children}</MemoryRouter>
+    </QueryClientProvider>
+  );
 }
 
-export function render(ui: React.ReactElement, options?: RenderOptions) {
-  return mainRender(ui, { wrapper: Wrapper, ...options });
+function customRender(ui: React.ReactElement, options?: RenderOptions) {
+  return render(ui, { wrapper: Wrapper, ...options });
+}
+
+// Get a dropdown/selector button by its label text.
+export function getSelectorButtonByLabel(labelText: string): HTMLElement {
+  const label = screen.getByText(labelText);
+  const button = label.closest('div')?.querySelector('button');
+  if (!button) {
+    throw new Error(`Button for label "${labelText}" not found`);
+  }
+  return button as HTMLElement;
 }
 
 export * from '@testing-library/react';
+export { customRender as render };
