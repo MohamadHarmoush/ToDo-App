@@ -59,11 +59,14 @@ const TaskForm = () => {
           }}
           children={(field) => (
             <div className='flex flex-col gap-1'>
-              <label className='text-sm text-gray-400'>Title</label>
+              <label className='text-sm text-gray-400' htmlFor='title'>
+                Title
+              </label>
               <input
                 className='rounded-lg border border-gray-700 bg-gray-800 p-2 text-white placeholder-gray-500'
                 type='text'
                 name='title'
+                id='title'
                 value={field.state.value}
                 placeholder='What needs to be done?'
                 onChange={(e) => {
@@ -113,7 +116,7 @@ const TaskForm = () => {
         <form.Field name='notes'>
           {(field) => (
             <div className='flex flex-col gap-1'>
-              <label className='text-sm text-gray-400'>Notes</label>
+              <label htmlFor='notes' className='text-sm text-gray-400'>Notes</label>
               <TaskNotes
                 expanded={true}
                 value={field.state.value}

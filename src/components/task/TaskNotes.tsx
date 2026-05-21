@@ -21,6 +21,7 @@ export const TaskNotes = ({
       className={`transition-all duration-300 ease-in-out ${expandedPanelClassName} ${className}`}
     >
       <textarea
+        id='notes'
         className='w-full rounded-lg bg-gray-800 p-2 text-xs outline-none'
         placeholder={placeholder}
         rows={4}
