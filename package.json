@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
     "@tailwindcss/vite": "^4.2.4",
     "@tanstack/react-form": "^1.32.0",
     "@tanstack/react-query": "^5.100.10",
