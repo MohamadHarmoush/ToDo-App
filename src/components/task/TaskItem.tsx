@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
-import { deleteTask, updateTask } from '@/api';
 import { useDeleteTaskMutation } from '@/hooks/useDeleteTaskMutation';
+import { usePrefetchOnVisible } from '@/hooks/usePrefetchOnVisible';
 import { useUpdateTaskMutation } from '@/hooks/useUpdateTaskMutation';
 import type { Task } from '@/domain/Task';
 
@@ -21,6 +21,7 @@ type Props = {
 export const TaskItem = ({ task, className = '', onDelete }: Props) => {
   console.log('TaskItem rendered.');
   const [isExpanded, setIsExpand] = useState(false);
+  const itemRef = usePrefetchOnVisible(task.id);
   const updateTaskMutation = useUpdateTaskMutation();
   const removeTaskMutation = useDeleteTaskMutation({ onDelete });
 
@@ -31,6 +32,7 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
 
   return (
     <div
+      ref={itemRef}
       data-testid='task-item'
       className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}
     >
