@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
 
+import { TransitionLink } from '@/components/TransitionLink';
 import { useDeleteTaskMutation } from '@/hooks/useDeleteTaskMutation';
 import { usePrefetchOnVisible } from '@/hooks/usePrefetchOnVisible';
 import { useUpdateTaskMutation } from '@/hooks/useUpdateTaskMutation';
@@ -45,9 +45,9 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
           }}
         />
 
-        <Link to={`/task/${task.id}`} className='flex-1'>
+        <TransitionLink to={`/task/${task.id}`} className='flex-1'>
           <TaskTitle title={task.title} completed={task.completed} />
-        </Link>
+        </TransitionLink>
 
         <TaskActions
           className='ml-auto'

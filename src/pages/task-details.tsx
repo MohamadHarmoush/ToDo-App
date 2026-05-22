@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { ClipLoader } from 'react-spinners';
 
 import { fetchTaskDetails } from '@/api';
 import { TaskItem } from '@/components/task/TaskItem';
+import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 const TaskDetailsPage = () => {
   const { id: taskId = '' } = useParams();
-  const navigate = useNavigate();
+  const navigate = useViewTransitionNavigate();
   const {
     data: task,
     error,

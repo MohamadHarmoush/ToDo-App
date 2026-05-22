@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Route, Routes } from 'react-router';
 
 import AppLayout, { AppContent, AppHeader } from './components/AppLayout';
@@ -7,7 +6,6 @@ import HomePage from './pages/home';
 import NotFoundPage from './pages/not-found';
 import TaskDetailsPage from './pages/task-details';
 import TasksPage from './pages/tasks';
-import { seed100Tasks } from './utils/seedTasksFromJson';
 
 const routes = [
   { path: '/', element: <HomePage /> },

@@ -42,3 +42,41 @@ body {
   margin-bottom: 1rem;
   line-height: 1.6;
 }
+
+/* View Transitions */
+/* @view-transition {
+  navigation: auto;
+} */
+nav {
+  view-transition-name: nav;
+}
+.appHeader {
+  view-transition-name: appHeader;
+}
+
+/* Default (no class) - same as TransitionLink */
+::view-transition-old(root) {
+  animation: slide-out-to-left 0.5s ease-in forwards;
+}
+::view-transition-new(root) {
+  animation: slide-in-from-right 0.5s ease-out forwards;
+}
+
+/* useViewTransitionNavigate: Old page slides from right, new page slides to left */
+.vt-navigate::view-transition-old(root) {
+  animation: slide-in-from-right 0.5s ease-in forwards reverse;
+}
+.vt-navigate::view-transition-new(root) {
+  animation: slide-out-to-left 0.5s ease-out forwards reverse;
+}
+
+@keyframes slide-out-to-left {
+  to {
+    translate: -100vw 0;
+  }
+}
+@keyframes slide-in-from-right {
+  from {
+    translate: 100vw 0;
+  }
+}

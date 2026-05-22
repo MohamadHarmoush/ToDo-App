@@ -3,11 +3,13 @@ import { MdHome } from '@react-icons/all-files/md/MdHome';
 import { MdInfo } from '@react-icons/all-files/md/MdInfo';
 import { MdList } from '@react-icons/all-files/md/MdList';
 import type { ReactNode } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
 
 import { useIsMobile } from '@/hooks/useIsMobile';
+import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 import NavBar from './NavBar';
+import { TransitionLink } from './TransitionLink';
 
 const MobileBottomNav = () => {
   const navItems = [
@@ -23,7 +25,7 @@ const MobileBottomNav = () => {
           <NavLink
             key={item.link}
             to={item.link}
-            className={({ isActive }) =>
+            className={({ isActive }: { isActive: boolean }) =>
               `flex flex-col items-center gap-1 px-4 py-1 transition-colors ${
                 isActive ? 'text-blue-400' : 'text-gray-400 hover:text-white'
               }`
@@ -45,11 +47,11 @@ type AppHeaderProps = {
 const AppHeader = ({ title }: AppHeaderProps) => {
   const isMobile = useIsMobile();
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate = useViewTransitionNavigate();
   const showBackButton = isMobile && location.pathname !== '/' && location.pathname !== '/tasks';
 
   return (
-    <header className='border-b border-gray-700 bg-gray-800/50 px-8 py-4'>
+    <header className='appHeader border-b border-gray-700 bg-gray-800/50 px-8 py-4'>
       <div className='grid grid-cols-[1fr_auto_1fr] items-center'>
         <div className='flex items-center gap-3'>
           {showBackButton && (
@@ -59,9 +61,9 @@ const AppHeader = ({ title }: AppHeaderProps) => {
           )}
         </div>
 
-        <Link to='/' className='flex justify-center'>
+        <TransitionLink to='/' className='flex justify-center'>
           <h1 className='text-xl font-bold text-white/80'>{title}</h1>
-        </Link>
+        </TransitionLink>
 
         <div className='flex justify-end'>
           {!isMobile && (
