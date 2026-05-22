@@ -1,7 +1,7 @@
 type Props = {
   title: string;
   completed: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
 };
 
@@ -13,7 +13,7 @@ export const TaskTitle = ({ title, completed, onClick, className = '' }: Props) 
       onClick={onClick}
       onKeyDown={(e) => {
         e.preventDefault();
-        onClick();
+        onClick?.();
       }}
       className={`cursor-pointer ${taskTitleClassName} ${className}`}
     >
