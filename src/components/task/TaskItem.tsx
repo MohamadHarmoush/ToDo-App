@@ -1,8 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Link } from 'react-router';
 
-import { deleteTask, updateTask } from '@/api';
+import { TransitionLink } from '@/components/TransitionLink';
+import { useDeleteTaskMutation } from '@/hooks/useDeleteTaskMutation';
+import { usePrefetchOnVisible } from '@/hooks/usePrefetchOnVisible';
+import { useUpdateTaskMutation } from '@/hooks/useUpdateTaskMutation';
 import type { Task } from '@/domain/Task';
 
 import { Checkbox } from './Checkbox';
@@ -19,57 +20,10 @@ type Props = {
 
 export const TaskItem = ({ task, className = '', onDelete }: Props) => {
   console.log('TaskItem rendered.');
-  const queryClient = useQueryClient();
   const [isExpanded, setIsExpand] = useState(false);
-
-  const updateTaskMutation = useMutation({
-    mutationFn: updateTask,
-    onMutate: async (updatedTask: Task) => {
-      await queryClient.cancelQueries({ queryKey: ['tasks'] });
-      const previousTasks = queryClient.getQueryData<Task[]>(['tasks']);
-      queryClient.setQueryData<Task[]>(
-        ['tasks'],
-        (old) => old?.map((t) => (t.id === updatedTask.id ? updatedTask : t)) ?? [],
-      );
-      return { previousTasks };
-    },
-    onError: (_err, _variables, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(['tasks'], context.previousTasks);
-      }
-    },
-    onSuccess: (updatedTask) => {
-      queryClient.setQueryData<Task>(['task', updatedTask.id], updatedTask);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
-    },
-  });
-
-  const removeTaskMutation = useMutation({
-    mutationFn: deleteTask,
-    onMutate: async (deletedId: string) => {
-      await queryClient.cancelQueries({ queryKey: ['tasks'] });
-      const previousTasks = queryClient.getQueryData<Task[]>(['tasks']);
-      queryClient.setQueryData<Task[]>(
-        ['tasks'],
-        (old) => old?.filter((t) => t.id !== deletedId) ?? [],
-      );
-      return { previousTasks };
-    },
-    onError: (_err, _variables, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(['tasks'], context.previousTasks);
-      }
-    },
-    onSuccess: (_data, deletedId) => {
-      queryClient.removeQueries({ queryKey: ['task', deletedId] });
-      onDelete?.();
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
-    },
-  });
+  const itemRef = usePrefetchOnVisible(task.id);
+  const updateTaskMutation = useUpdateTaskMutation();
+  const removeTaskMutation = useDeleteTaskMutation({ onDelete });
 
   const toggleExpand = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -78,6 +32,7 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
 
   return (
     <div
+      ref={itemRef}
       data-testid='task-item'
       className={`flex flex-col gap-2 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4 ${className}`}
     >
@@ -90,15 +45,9 @@ export const TaskItem = ({ task, className = '', onDelete }: Props) => {
           }}
         />
 
-        <Link to={`/task/${task.id}`} className='flex-1'>
-          <TaskTitle
-            title={task.title}
-            completed={task.completed}
-            onClick={() => {
-              updateTaskMutation.mutate({ ...task, completed: !task.completed });
-            }}
-          />
-        </Link>
+        <TransitionLink to={`/task/${task.id}`} className='flex-1'>
+          <TaskTitle title={task.title} completed={task.completed} />
+        </TransitionLink>
 
         <TaskActions
           className='ml-auto'

@@ -16,7 +16,7 @@ const NavBar = ({ navItems }: Props) => {
         <NavLink
           key={navItem.link}
           to={navItem.link}
-          className={({ isActive }) =>
+          className={({ isActive }: { isActive: boolean }) =>
             `text-sm font-medium transition-colors ${isActive ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`
           }
         >

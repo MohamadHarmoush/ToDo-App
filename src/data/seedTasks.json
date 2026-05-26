@@ -1,0 +1,517 @@
+[
+  {
+    "title": "Complete project documentation",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Review and finalize all technical docs"
+  },
+  {
+    "title": "Buy groceries for the week",
+    "priority": "Medium",
+    "type": "Shopping",
+    "notes": "Get vegetables, fruits, and milk"
+  },
+  {
+    "title": "Morning jogging",
+    "priority": "Low",
+    "type": "Health",
+    "notes": "Run 5km at the park"
+  },
+  {
+    "title": "Pay electricity bill",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Due by end of month"
+  },
+  {
+    "title": "Call mom",
+    "priority": "Medium",
+    "type": "Personal",
+    "notes": "Catch up on family news"
+  },
+  {
+    "title": "Fix bathroom sink",
+    "priority": "Low",
+    "type": "General",
+    "notes": "Replace the faucet"
+  },
+  {
+    "title": "Prepare presentation slides",
+    "priority": "High",
+    "type": "Work",
+    "notes": "For Monday's team meeting"
+  },
+  {
+    "title": "Buy birthday gift",
+    "priority": "Medium",
+    "type": "Shopping",
+    "notes": "For Sarah's birthday next week"
+  },
+  {
+    "title": "Schedule dentist appointment",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Routine checkup"
+  },
+  {
+    "title": "Review monthly budget",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Track expenses and savings"
+  },
+  {
+    "title": "Plan weekend trip",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Research destinations"
+  },
+  {
+    "title": "Organize closet",
+    "priority": "Low",
+    "type": "General",
+    "notes": "Donate old clothes"
+  },
+  {
+    "title": "Attend team standup",
+    "priority": "Medium",
+    "type": "Work",
+    "notes": "Daily sync at 9 AM"
+  },
+  {
+    "title": "Order new laptop charger",
+    "priority": "High",
+    "type": "Shopping",
+    "notes": "Current one is broken"
+  },
+  {
+    "title": "Drink 8 glasses of water",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Stay hydrated throughout the day"
+  },
+  {
+    "title": "File tax returns",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Gather all necessary documents"
+  },
+  {
+    "title": "Write journal entry",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Reflect on the day"
+  },
+  {
+    "title": "Clean kitchen",
+    "priority": "Medium",
+    "type": "General",
+    "notes": "Wipe counters and mop floor"
+  },
+  {
+    "title": "Code review for PR #234",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Focus on security changes"
+  },
+  {
+    "title": "Buy new running shoes",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "Replace worn-out pair"
+  },
+  {
+    "title": "Meditate for 10 minutes",
+    "priority": "Low",
+    "type": "Health",
+    "notes": "Morning mindfulness practice"
+  },
+  {
+    "title": "Set up automatic savings",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "Transfer 10% monthly"
+  },
+  {
+    "title": "Read 20 pages",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Continue current book"
+  },
+  {
+    "title": "Fix leaky faucet",
+    "priority": "Medium",
+    "type": "General",
+    "notes": "Call plumber if needed"
+  },
+  {
+    "title": "Update project roadmap",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Q3 planning session"
+  },
+  {
+    "title": "Buy protein powder",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "For post-workout shakes"
+  },
+  {
+    "title": "Get flu shot",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Annual vaccination"
+  },
+  {
+    "title": "Review investment portfolio",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "Check performance metrics"
+  },
+  {
+    "title": "Movie night with friends",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Pick a comedy movie"
+  },
+  {
+    "title": "Change air filters",
+    "priority": "Low",
+    "type": "General",
+    "notes": "Every 3 months maintenance"
+  },
+  {
+    "title": "Deploy production release",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Monitor for 2 hours after"
+  },
+  {
+    "title": "Buy coffee beans",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "Get Ethiopian blend"
+  },
+  {
+    "title": "Schedule annual physical",
+    "priority": "High",
+    "type": "Health",
+    "notes": "Comprehensive checkup"
+  },
+  {
+    "title": "Pay credit card bill",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Avoid late fees"
+  },
+  { "title": "Learn new recipe", "priority": "Low", "type": "Personal", "notes": "Try Thai curry" },
+  { "title": "Wash car", "priority": "Low", "type": "General", "notes": "Interior and exterior" },
+  {
+    "title": "Write unit tests",
+    "priority": "Medium",
+    "type": "Work",
+    "notes": "Cover edge cases"
+  },
+  {
+    "title": "Buy birthday card",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "For grandma's birthday"
+  },
+  {
+    "title": "Take vitamins",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Daily multivitamin"
+  },
+  {
+    "title": "Cancel unused subscriptions",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "Review monthly charges"
+  },
+  {
+    "title": "Practice guitar",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Learn new chord progression"
+  },
+  {
+    "title": "Mow the lawn",
+    "priority": "Medium",
+    "type": "General",
+    "notes": "Front and backyard"
+  },
+  {
+    "title": "Client meeting preparation",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Review requirements doc"
+  },
+  {
+    "title": "Buy school supplies",
+    "priority": "Medium",
+    "type": "Shopping",
+    "notes": "Notebooks and pens"
+  },
+  {
+    "title": "Get eyes checked",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Update prescription if needed"
+  },
+  {
+    "title": "Create emergency fund",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Save 3 months expenses"
+  },
+  {
+    "title": "Video call with sister",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Catch up on her news"
+  },
+  {
+    "title": "Paint bedroom wall",
+    "priority": "Low",
+    "type": "General",
+    "notes": "Choose light blue color"
+  },
+  {
+    "title": "Fix bug in authentication",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Critical security issue"
+  },
+  {
+    "title": "Buy new headphones",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "Noise cancelling preferred"
+  },
+  { "title": "Yoga session", "priority": "Low", "type": "Health", "notes": "Evening relaxation" },
+  {
+    "title": "Compare insurance rates",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "Home and auto policies"
+  },
+  {
+    "title": "Organize photo album",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Digital backup too"
+  },
+  {
+    "title": "Replace light bulbs",
+    "priority": "Low",
+    "type": "General",
+    "notes": "Switch to LED"
+  },
+  {
+    "title": "Database optimization",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Add missing indexes"
+  },
+  {
+    "title": "Buy winter coat",
+    "priority": "Medium",
+    "type": "Shopping",
+    "notes": "Waterproof and warm"
+  },
+  {
+    "title": "Meal prep for week",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Healthy lunches"
+  },
+  {
+    "title": "Set financial goals",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Short and long term"
+  },
+  { "title": "Visit museum", "priority": "Low", "type": "Personal", "notes": "Modern art exhibit" },
+  {
+    "title": "Deep clean refrigerator",
+    "priority": "Medium",
+    "type": "General",
+    "notes": "Discard expired items"
+  },
+  {
+    "title": "API documentation update",
+    "priority": "Medium",
+    "type": "Work",
+    "notes": "New endpoints to document"
+  },
+  {
+    "title": "Buy printer ink",
+    "priority": "High",
+    "type": "Shopping",
+    "notes": "Running low on cyan"
+  },
+  {
+    "title": "Get 8 hours sleep",
+    "priority": "High",
+    "type": "Health",
+    "notes": "Consistent bedtime"
+  },
+  {
+    "title": "Track daily expenses",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "Use budgeting app"
+  },
+  {
+    "title": "Host dinner party",
+    "priority": "Medium",
+    "type": "Personal",
+    "notes": "Invite 6 friends"
+  },
+  { "title": "Fix squeaky door", "priority": "Low", "type": "General", "notes": "Oil the hinges" },
+  { "title": "Security audit", "priority": "High", "type": "Work", "notes": "Review access logs" },
+  {
+    "title": "Buy gift for anniversary",
+    "priority": "High",
+    "type": "Shopping",
+    "notes": "Something meaningful"
+  },
+  {
+    "title": "Schedule therapy session",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Mental wellness check"
+  },
+  {
+    "title": "Refinance mortgage",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Check current rates"
+  },
+  { "title": "Start new hobby", "priority": "Low", "type": "Personal", "notes": "Pottery class" },
+  { "title": "Clean garage", "priority": "Low", "type": "General", "notes": "Organize tools" },
+  {
+    "title": "Performance review prep",
+    "priority": "High",
+    "type": "Work",
+    "notes": "List achievements"
+  },
+  {
+    "title": "Buy camping gear",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "Tent and sleeping bag"
+  },
+  { "title": "Join gym", "priority": "Medium", "type": "Health", "notes": "Near home or office" },
+  {
+    "title": "Open savings account",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "High interest rate"
+  },
+  {
+    "title": "Plan family reunion",
+    "priority": "Medium",
+    "type": "Personal",
+    "notes": "Summer gathering"
+  },
+  {
+    "title": "Service AC unit",
+    "priority": "Medium",
+    "type": "General",
+    "notes": "Before summer heat"
+  },
+  {
+    "title": "Refactor legacy code",
+    "priority": "Medium",
+    "type": "Work",
+    "notes": "Improve maintainability"
+  },
+  {
+    "title": "Buy new phone case",
+    "priority": "Low",
+    "type": "Shopping",
+    "notes": "Protective and stylish"
+  },
+  { "title": "Dental cleaning", "priority": "Medium", "type": "Health", "notes": "Every 6 months" },
+  {
+    "title": "Review 401k contributions",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Maximize employer match"
+  },
+  {
+    "title": "Volunteer at shelter",
+    "priority": "Low",
+    "type": "Personal",
+    "notes": "Weekend commitment"
+  },
+  { "title": "Plant herbs", "priority": "Low", "type": "General", "notes": "Basil and mint" },
+  {
+    "title": "Update dependencies",
+    "priority": "Medium",
+    "type": "Work",
+    "notes": "Check for vulnerabilities"
+  },
+  { "title": "Buy new blender", "priority": "Low", "type": "Shopping", "notes": "For smoothies" },
+  {
+    "title": "Walk 10000 steps",
+    "priority": "Medium",
+    "type": "Health",
+    "notes": "Daily goal tracking"
+  },
+  { "title": "Create will", "priority": "High", "type": "Finance", "notes": "Estate planning" },
+  { "title": "Learn photography", "priority": "Low", "type": "Personal", "notes": "Online course" },
+  { "title": "Power wash deck", "priority": "Low", "type": "General", "notes": "Spring cleaning" },
+  {
+    "title": "Interview candidate",
+    "priority": "High",
+    "type": "Work",
+    "notes": "Senior developer role"
+  },
+  {
+    "title": "Buy concert tickets",
+    "priority": "Medium",
+    "type": "Shopping",
+    "notes": "Favorite band"
+  },
+  {
+    "title": "Blood pressure check",
+    "priority": "High",
+    "type": "Health",
+    "notes": "Monitor regularly"
+  },
+  {
+    "title": "Pay off student loan",
+    "priority": "High",
+    "type": "Finance",
+    "notes": "Final payment!"
+  },
+  {
+    "title": "Take online course",
+    "priority": "Medium",
+    "type": "Personal",
+    "notes": "Skill development"
+  },
+  {
+    "title": "Fix broken tile",
+    "priority": "Medium",
+    "type": "General",
+    "notes": "Bathroom floor"
+  },
+  {
+    "title": "Implement feature flag",
+    "priority": "Medium",
+    "type": "Work",
+    "notes": "A/B test new UI"
+  },
+  { "title": "Buy smartwatch", "priority": "Low", "type": "Shopping", "notes": "Fitness tracking" },
+  { "title": "Quit smoking", "priority": "High", "type": "Health", "notes": "Set quit date" },
+  {
+    "title": "Build credit score",
+    "priority": "Medium",
+    "type": "Finance",
+    "notes": "Pay bills on time"
+  }
+]

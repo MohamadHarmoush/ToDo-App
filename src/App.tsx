@@ -16,6 +16,13 @@ const routes = [
 ];
 
 const App = () => {
+  /*   useEffect(() => {
+    const addDummyTasks = async () => {
+      seed100Tasks();
+    };
+
+    addDummyTasks();
+  }, []); */
   return (
     <AppLayout>
       <AppHeader title='Simple Todo' />

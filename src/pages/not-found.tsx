@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router';
+import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 const NotFoundPage = () => {
-  const navigation = useNavigate();
+  const navigate = useViewTransitionNavigate('backwards');
   return (
     <div className='not-found flex flex-col'>
       <h1 className='text-center font-bold'>Oops! Page Not Found</h1>
@@ -11,7 +11,7 @@ const NotFoundPage = () => {
       </span>
       <button
         className='mt-8 rounded-xl bg-gray-800/50 px-4 pt-2 pb-4'
-        onClick={() => navigation('/')}
+        onClick={() => navigate('/')}
       >
         Back To Home
       </button>
