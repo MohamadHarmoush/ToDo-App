@@ -47,7 +47,7 @@ type AppHeaderProps = {
 const AppHeader = ({ title }: AppHeaderProps) => {
   const isMobile = useIsMobile();
   const location = useLocation();
-  const navigate = useViewTransitionNavigate();
+  const navigate = useViewTransitionNavigate('backwards');
   const showBackButton = isMobile && location.pathname !== '/' && location.pathname !== '/tasks';
 
   return (
