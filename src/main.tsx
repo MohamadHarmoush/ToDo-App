@@ -7,6 +7,10 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
 
 import App from './App.tsx';
+import { initTheme } from './store/themeStore.ts';
+
+// Initialize theme before rendering (prevents flash of unstyled content)
+initTheme();
 
 const queryClient = new QueryClient({
   defaultOptions: {
