@@ -8,7 +8,7 @@ import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 const TaskDetailsPage = () => {
   const { id: taskId = '' } = useParams();
-  const navigate = useViewTransitionNavigate();
+  const navigate = useViewTransitionNavigate('backwards');
   const {
     data: task,
     error,

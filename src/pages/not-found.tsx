@@ -1,7 +1,7 @@
 import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 const NotFoundPage = () => {
-  const navigate = useViewTransitionNavigate();
+  const navigate = useViewTransitionNavigate('backwards');
   return (
     <div className='not-found flex flex-col'>
       <h1 className='text-center font-bold'>Oops! Page Not Found</h1>

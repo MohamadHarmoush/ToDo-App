@@ -1,11 +1,11 @@
 import { flushSync } from 'react-dom';
 import { useNavigate, type NavigateOptions, type To } from 'react-router';
 
-export function useViewTransitionNavigate() {
+export function useViewTransitionNavigate(type: string = '') {
   const navigate = useNavigate();
 
   return (to: To | number, options?: NavigateOptions) => {
-    document.documentElement.classList.add('vt-navigate');
+    document.documentElement.classList.add(type);
 
     const doNavigate = () => {
       flushSync(() => {
@@ -18,9 +18,9 @@ export function useViewTransitionNavigate() {
     };
 
     if ('startViewTransition' in document) {
-      const transition = document.startViewTransition(doNavigate);
+      const transition = document.startViewTransition({ update: doNavigate, types: [type] });
       transition.finished.then(() => {
-        document.documentElement.classList.remove('vt-navigate');
+        document.documentElement.classList.remove(type);
       });
     } else {
       doNavigate();
