@@ -17,10 +17,7 @@ const TaskList = () => {
     queryKey: ['tasks'],
     queryFn: async ({ signal }) => {
       const tasks = await fetchTasks(signal);
-      const completedTasks = tasks.filter((task) => task.completed);
-      const pendingTasks = tasks.filter((task) => !task.completed);
-
-      return [...pendingTasks, ...completedTasks];
+      return tasks;
     },
   });
 

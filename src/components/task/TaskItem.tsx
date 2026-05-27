@@ -20,8 +20,9 @@ type Props = {
   onDelete?: () => void;
 };
 
-const SWIPE_THRESHOLD = -80;
+const SWIPE_DELETE_THRESHOLD = -80;
 const DELETE_THRESHOLD = -150;
+const COMPLETE_THRESHOLD = 50;
 
 export const TaskItem = ({ task, onDelete }: Props) => {
   console.log('TaskItem rendered.');
@@ -45,22 +46,34 @@ export const TaskItem = ({ task, onDelete }: Props) => {
     });
   };
 
+  const handleToggleComplete = () => {
+    api.start({
+      x: 0,
+      config: { tension: 300, friction: 30 },
+      onRest: () => {
+        updateTaskMutation.mutate({ ...task, completed: !task.completed });
+      },
+    });
+  };
+
   const bind = useDrag(
-    ({ movement: [mx], direction: [dx], down }) => {
-      const isLeftSwipe = dx < 0;
+    ({ movement: [mx], down }) => {
+      // Constrain drag between -150 (left) and +50 (right)
+      const xPos = Math.max(DELETE_THRESHOLD, Math.min(COMPLETE_THRESHOLD, mx));
 
       if (down) {
-        const constrainedX = Math.max(DELETE_THRESHOLD, Math.min(0, mx));
-        api.start({ x: constrainedX, immediate: true });
-      } else {
-        if (mx <= DELETE_THRESHOLD && isLeftSwipe) {
-          handleDelete();
-        } else if (mx < SWIPE_THRESHOLD / 2) {
-          api.start({ x: SWIPE_THRESHOLD, config: { tension: 300, friction: 30 } });
-        } else {
-          api.start({ x: 0, config: { tension: 300, friction: 30 } });
-        }
+        // Dragging - update position immediately
+        api.start({ x: xPos, immediate: true });
+        return;
       }
+
+      // Released - check thresholds
+      if (xPos <= DELETE_THRESHOLD) return handleDelete();
+      if (xPos >= COMPLETE_THRESHOLD) return handleToggleComplete();
+
+      // Partial swipe - snap back or reveal delete
+      const target = xPos < SWIPE_DELETE_THRESHOLD / 2 ? SWIPE_DELETE_THRESHOLD : 0;
+      api.start({ x: target, config: { tension: 300, friction: 30 } });
     },
     {
       axis: 'x',
@@ -70,9 +83,6 @@ export const TaskItem = ({ task, onDelete }: Props) => {
     },
   );
 
-  const bgOpacity = x.to((val) => Math.min(1, Math.abs(val) / Math.abs(SWIPE_THRESHOLD)));
-  const confirmOpacity = x.to((val) => (val <= DELETE_THRESHOLD ? 1 : 0.8));
-
   return (
     <animated.div
       ref={itemRef}
@@ -80,30 +90,40 @@ export const TaskItem = ({ task, onDelete }: Props) => {
       className='relative overflow-hidden rounded-xl'
       style={{ opacity }}
     >
-      {/* Delete background layer */}
+      {/* Background layer - Green for right (complete), Red for left (delete) */}
       <animated.div
-        className='absolute inset-0 flex items-center justify-end rounded-xl'
+        className='absolute inset-0 flex items-center rounded-xl'
         style={{
-          backgroundColor: x.to((val) =>
-            val <= DELETE_THRESHOLD ? 'rgb(220, 38, 38)' : 'rgb(239, 68, 68)',
-          ),
-          opacity: bgOpacity,
+          backgroundColor: x.to((val) => (val > 0 ? 'rgb(34, 197, 94)' : 'rgb(239, 68, 68)')),
+          display: x.to((val) => (Math.abs(val) > 1 ? 'flex' : 'none')),
         }}
       >
-        <animated.div
-          className='flex items-center gap-2 pr-4 text-white'
-          style={{ opacity: bgOpacity }}
-        >
-          <animated.span
-            className='text-sm font-medium'
-            style={{
-              opacity: confirmOpacity,
-            }}
+        {/* Left side - Check icon for complete */}
+        <div className='flex flex-1 items-center pl-4'>
+          <animated.svg
+            className='h-6 w-6 text-white'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+            strokeWidth={2}
+            style={{ opacity: x.to((val) => (val > 0 ? Math.min(1, val / 60) : 0)) }}
           >
-            {x.to((val) => (val <= DELETE_THRESHOLD ? 'Release to delete' : 'Delete'))}
-          </animated.span>
-          <RemoveIcon className='h-5 w-5' />
-        </animated.div>
+            <path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7' />
+          </animated.svg>
+        </div>
+
+        {/* Right side - Trash icon for delete */}
+        <div className='flex flex-1 items-center justify-end pr-4'>
+          <animated.div
+            className='flex items-center gap-2 font-medium text-white'
+            style={{ opacity: x.to((val) => (val < 0 ? Math.min(1, Math.abs(val) / 60) : 0)) }}
+          >
+            <animated.span className='text-sm tracking-wide uppercase'>
+              {x.to((val) => (val <= SWIPE_DELETE_THRESHOLD / 2 ? 'Release to Delete' : 'Delete'))}
+            </animated.span>
+            <RemoveIcon className='h-5 w-5' />
+          </animated.div>
+        </div>
       </animated.div>
 
       {/* Main content layer */}
@@ -125,13 +145,7 @@ export const TaskItem = ({ task, onDelete }: Props) => {
             <TaskTitle title={task.title} completed={task.completed} />
           </TransitionLink>
 
-          <TaskActions
-            expanded={isExpanded}
-            onToggle={toggleExpand}
-            onRemove={() => {
-              removeTaskMutation.mutate(task.id);
-            }}
-          />
+          <TaskActions expanded={isExpanded} onToggle={toggleExpand} />
         </div>
 
         <TaskBadges priority={task.priority} type={task.type} />
