@@ -15,11 +15,11 @@ const TaskList = () => {
     error,
   } = useQuery({
     queryKey: ['tasks'],
-    queryFn: async ({signal}) => {
+    queryFn: async ({ signal }) => {
       const tasks = await fetchTasks(signal);
       const completedTasks = tasks.filter((task) => task.completed);
       const pendingTasks = tasks.filter((task) => !task.completed);
-  
+
       return [...pendingTasks, ...completedTasks];
     },
   });
@@ -28,26 +28,29 @@ const TaskList = () => {
   console.log('TaskList rendered.');
 
   return (
-    <div className='mt-8 flex flex-col gap-2 overflow-y-auto pr-2'>
-      <div>
+    <div>
+      <div className='mt-4 mb-6'>
         {isLoading && (
           <div className='flex justify-center'>
             <ClipLoader data-testid='loading-spinner' color='white' />
           </div>
         )}
         {isError && <h1 className='pt-2 text-red-500'>{error.message}</h1>}
+
+        {isSuccess && (
+          <h1>
+            {`We've added ${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}.`}
+            {completedCount > 0
+              ? ` ${completedCount} ${completedCount === 1 ? 'task' : 'tasks'} are done.`
+              : ' No tasks are done yet.'}
+          </h1>
+        )}
       </div>
-      {isSuccess && (
-        <h1>
-          {`We've added ${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}.`}
-          {completedCount > 0
-            ? ` ${completedCount} ${completedCount === 1 ? 'task' : 'tasks'} are done.`
-            : ' No tasks are done yet.'}
-        </h1>
-      )}
-      {tasks.map((task) => (
-        <TaskItem task={task} key={task.id} />
-      ))}
+      <div className='grid gap-4 overflow-y-auto pr-2 sm:grid-cols-2 lg:grid-cols-3'>
+        {tasks.map((task) => (
+          <TaskItem task={task} key={task.id} />
+        ))}
+      </div>
     </div>
   );
 };

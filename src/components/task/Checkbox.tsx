@@ -2,10 +2,9 @@ type Props = {
   id: string;
   checked: boolean;
   onChange: (checked: boolean) => void;
-  className?: string;
 };
 
-export const Checkbox = ({ id, checked, onChange, className = '' }: Props) => {
+export const Checkbox = ({ id, checked, onChange }: Props) => {
   return (
     <input
       type='checkbox'
@@ -17,7 +16,7 @@ export const Checkbox = ({ id, checked, onChange, className = '' }: Props) => {
       onClick={(e) => {
         e.stopPropagation();
       }}
-      className={`mt-1 h-4 w-4 ${className}`}
+      className='mt-0.5 h-4 w-4 shrink-0'
     />
   );
 };

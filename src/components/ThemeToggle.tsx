@@ -1,15 +1,16 @@
 import { BsMoon } from '@react-icons/all-files/bs/BsMoon';
 import { BsSun } from '@react-icons/all-files/bs/BsSun';
 import { useAtom } from 'jotai';
+import { useCallback } from 'react';
 
-import { themeAtom } from '@/store/themeStore';
+import { themeAtom, type Theme } from '@/store/themeStore';
 
 export const ThemeToggle = () => {
   const [theme, setTheme] = useAtom(themeAtom);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
+  }, [theme]);
 
   return (
     <button

@@ -34,7 +34,7 @@ const AppHeader = ({ title }: AppHeaderProps) => {
 
   return (
     <>
-      <header className='appHeader relative z-50 border-b border-gray-200 bg-white/80 px-8 py-4 backdrop-blur-sm transition-colors dark:border-gray-700 dark:bg-gray-800/50'>
+      <header className='appHeader relative z-50 border-b border-gray-200 bg-white/80 px-8 py-4 transition-colors dark:border-gray-700 dark:bg-gray-800/50'>
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-4'>
             {showBackButton && (

@@ -5,18 +5,16 @@ type Props = {
   expanded: boolean;
   onToggle: (e: React.MouseEvent) => void;
   onRemove: () => void;
-  className?: string;
 };
 
-export const TaskActions = ({ expanded, onToggle, onRemove, className = '' }: Props) => {
+export const TaskActions = ({ expanded, onToggle, onRemove }: Props) => {
   return (
-    <div className={`flex items-start gap-2 ${className}`}>
+    <div className='flex items-start gap-2'>
       <button
         type='button'
         onClick={(e) => onToggle(e)}
-        className='flex items-center gap-2 sm:pl-10'
+        className='flex items-center gap-2'
       >
-        <span className='hidden sm:inline'>{expanded ? 'collapse' : 'expand'}</span>
         <ArrowIcon direction={expanded ? 'up' : 'down'} />
       </button>
 
@@ -26,7 +24,7 @@ export const TaskActions = ({ expanded, onToggle, onRemove, className = '' }: Pr
           e.stopPropagation();
           onRemove();
         }}
-        className='rounded-lg bg-red-800 p-1 text-white transition-colors hover:bg-red-300/80'
+        className='rounded-lg bg-red-500 p-1 text-white transition-colors hover:bg-red-300/80 dark:bg-red-800'
       >
         <RemoveIcon className='h-5 w-5' />
       </button>

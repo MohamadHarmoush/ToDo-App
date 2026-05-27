@@ -3,26 +3,17 @@ type Props = {
   placeholder?: string;
   expanded: boolean;
   onUpdate: (notes: string) => void;
-  className?: string;
 };
-export const TaskNotes = ({
-  value,
-  expanded,
-  onUpdate,
-  placeholder = 'Add notes...',
-  className = '',
-}: Props) => {
+export const TaskNotes = ({ value, expanded, onUpdate, placeholder = 'Add notes...' }: Props) => {
   const expandedPanelClassName = expanded
     ? 'h-auto scale-100 opacity-100'
     : 'pointer-events-none h-0 scale-95 overflow-hidden opacity-0';
 
   return (
-    <div
-      className={`transition-all duration-300 ease-in-out ${expandedPanelClassName} ${className}`}
-    >
+    <div className={`transition-all duration-300 ease-in-out ${expandedPanelClassName}`}>
       <textarea
         id='notes'
-        className='w-full rounded-lg bg-gray-800 p-2 text-xs outline-none'
+        className='w-full rounded-lg border border-gray-300 bg-white p-2 text-xs dark:border-gray-600 dark:bg-gray-800'
         placeholder={placeholder}
         rows={4}
         value={value}
