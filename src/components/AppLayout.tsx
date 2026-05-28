@@ -8,6 +8,7 @@ import { useState, type ReactNode } from 'react';
 import { NavLink, useLocation } from 'react-router';
 
 import { useIsMobile } from '@/hooks/useIsMobile';
+import { useSyncTheme } from '@/hooks/useSyncTheme';
 import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 import NavBar from './NavBar';
@@ -110,11 +111,8 @@ const AppHeader = ({ title }: AppHeaderProps) => {
 };
 
 const Content = ({ children }: { children: ReactNode }) => {
-  const isMobile = useIsMobile();
   return (
-    <main
-      className={`mx-8 flex min-h-0 flex-1 flex-col bg-slate-50 py-6 transition-colors dark:bg-gray-900 ${isMobile ? 'pb-20' : ''}`}
-    >
+    <main className='mx-8 flex min-h-0 flex-1 flex-col bg-slate-50 py-6 transition-colors md:pb-20 dark:bg-gray-900'>
       {children}
     </main>
   );
@@ -125,6 +123,8 @@ type AppLayoutProps = {
 };
 
 const AppLayout = ({ children }: AppLayoutProps) => {
+  useSyncTheme();
+
   return (
     <div className='flex min-h-screen flex-col bg-slate-50 transition-colors dark:bg-gray-900'>
       {children}
