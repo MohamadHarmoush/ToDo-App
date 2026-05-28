@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { ClipLoader } from 'react-spinners';
 
 import { fetchTaskDetails } from '@/api';
-import { TaskItem } from '@/components/task/TaskItem';
+import { TaskDetailsCard } from '@/components/task/TaskDetailsCard';
 import { useViewTransitionNavigate } from '@/hooks/useViewTransitionNavigate';
 
 const TaskDetailsPage = () => {
@@ -20,10 +20,12 @@ const TaskDetailsPage = () => {
   });
 
   return (
-    <div className='flex h-full items-center justify-center'>
+    <div className='flex h-full items-center justify-center p-4'>
       {error && <p className='text-gray-400'>Task not found. error: {error.message}</p>}
       {isLoading && <ClipLoader color='white' />}
-      {task && <TaskItem task={task} className='w-full' onDelete={() => navigate('/')} />}
+      {task && (
+        <TaskDetailsCard task={task} onDelete={() => navigate('/')} />
+      )}
     </div>
   );
 };

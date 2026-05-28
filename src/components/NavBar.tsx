@@ -17,7 +17,11 @@ const NavBar = ({ navItems }: Props) => {
           key={navItem.link}
           to={navItem.link}
           className={({ isActive }: { isActive: boolean }) =>
-            `text-sm font-medium transition-colors ${isActive ? 'text-blue-400' : 'text-gray-400 hover:text-white'}`
+            `text-sm font-medium transition-colors ${
+              isActive
+                ? 'text-blue-600 dark:text-blue-400'
+                : 'text-slate-600 hover:text-slate-900 dark:text-gray-400 dark:hover:text-white'
+            }`
           }
         >
           {navItem.label}

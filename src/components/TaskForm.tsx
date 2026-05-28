@@ -40,8 +40,8 @@ const TaskForm = () => {
   });
 
   return (
-    <div className='rounded-2xl border border-gray-700 bg-gray-900 p-5 shadow-lg'>
-      <div className='pb-4 text-sm font-semibold tracking-widest text-gray-400 uppercase'>
+    <div className='bg-background-color rounded-2xl border border-gray-700 p-5 shadow-lg'>
+      <div className='text-color pb-4 text-sm font-semibold tracking-widest uppercase'>
         New Task
       </div>
       <form
@@ -59,11 +59,11 @@ const TaskForm = () => {
           }}
           children={(field) => (
             <div className='flex flex-col gap-1'>
-              <label className='text-sm text-gray-400' htmlFor='title'>
+              <label className='text-color text-sm' htmlFor='title'>
                 Title
               </label>
               <input
-                className='rounded-lg border border-gray-700 bg-gray-800 p-2 text-white placeholder-gray-500'
+                className='bg-background-color rounded-lg border border-gray-700 p-2 placeholder-gray-500'
                 type='text'
                 name='title'
                 id='title'
@@ -86,7 +86,7 @@ const TaskForm = () => {
           name='priority'
           children={(field) => (
             <div className='flex flex-col gap-1'>
-              <label htmlFor='priority' className='text-sm text-gray-400'>
+              <label htmlFor='priority' className='text-color text-sm'>
                 Priority
               </label>
 
@@ -104,7 +104,7 @@ const TaskForm = () => {
         <form.Field name='type'>
           {(field) => (
             <div className='flex flex-col gap-1'>
-              <label htmlFor='type' className='text-sm text-gray-400'>
+              <label htmlFor='type' className='text-color text-sm'>
                 Type
               </label>
 
@@ -122,7 +122,7 @@ const TaskForm = () => {
         <form.Field name='notes'>
           {(field) => (
             <div className='flex flex-col gap-1'>
-              <label htmlFor='notes' className='text-sm text-gray-400'>
+              <label htmlFor='notes' className='text-color text-sm'>
                 Notes
               </label>
               <TaskNotes
@@ -141,7 +141,7 @@ const TaskForm = () => {
             <button
               disabled={!canSubmit}
               type='submit'
-              className='items-center gap-2 rounded-xl px-8 py-2 enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
+              className='items-center gap-2 rounded-xl px-8 py-2 text-white enabled:bg-indigo-900 disabled:cursor-not-allowed disabled:bg-indigo-900/50'
             >
               {isPending && <ClipLoader data-testid='loading-spinner' size={24} color='white' />}
               {!isPending && <span>Add Task</span>}

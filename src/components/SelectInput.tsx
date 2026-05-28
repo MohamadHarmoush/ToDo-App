@@ -12,7 +12,6 @@ type SelectProps<T> = {
   options: Option<T>[];
   value: T;
   defaultColor?: string;
-  className?: string;
   onChange: (value: T) => void;
 };
 
@@ -22,7 +21,6 @@ const SelectInput = <T,>({
   value,
   defaultColor = '#374151',
   onChange,
-  className = '',
 }: SelectProps<T>) => {
   const [open, setOpen] = useState(false);
 
@@ -34,7 +32,7 @@ const SelectInput = <T,>({
       id={id}
       tabIndex={-1}
       onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}
-      className={`relative ${className}`}
+      className={`relative`}
     >
       <button
         type='button'
@@ -53,7 +51,7 @@ const SelectInput = <T,>({
       </button>
 
       {open && (
-        <ul className='absolute top-full left-0 z-50 mt-1 min-w-full overflow-hidden rounded-xl border border-gray-700 bg-gray-900 py-1 shadow-xl'>
+        <ul className='absolute top-full left-0 z-50 mt-1 min-w-full overflow-hidden rounded-xl border border-gray-700 bg-gray-500 py-1 shadow-xl dark:bg-gray-900'>
           {options.map((option) => (
             <li key={String(option.value)}>
               <button

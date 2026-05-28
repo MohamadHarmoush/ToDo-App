@@ -2,22 +2,21 @@ type Props = {
   title: string;
   completed: boolean;
   onClick?: () => void;
-  className?: string;
 };
 
-export const TaskTitle = ({ title, completed, onClick, className = '' }: Props) => {
+export const TaskTitle = ({ title, completed, onClick }: Props) => {
   const taskTitleClassName = completed ? 'line-through text-gray-400' : '';
 
   return (
-    <h1
+    <p
       onClick={onClick}
       onKeyDown={(e) => {
         e.preventDefault();
         onClick?.();
       }}
-      className={`cursor-pointer ${taskTitleClassName} ${className}`}
+      className={`cursor-pointer text-sm font-medium ${taskTitleClassName}`}
     >
       {title}
-    </h1>
+    </p>
   );
 };
